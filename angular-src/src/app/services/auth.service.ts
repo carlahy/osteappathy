@@ -10,18 +10,21 @@ export class AuthService {
 
   constructor(private http:Http) { }
 
+  // Set to empty string for heroku prod
+  domain:String = 'http://localhost:3000/'
+
   registerUser(user){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     // Observable that can be subscribed to
-    return this.http.post('users/register', user, {headers: headers})
+    return this.http.post(this.domain+'users/register', user, {headers: headers})
       .map(res => res.json());
   }
 
   authenticateUser(user){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.post('users/authenticate', user, {headers: headers})
+    return this.http.post(this.domain+'users/authenticate', user, {headers: headers})
       .map(res => res.json());
   }
 
@@ -30,7 +33,7 @@ export class AuthService {
     this.loadToken();
     headers.append('Authorization',this.authToken);
     headers.append('Content-Type','application/json');
-    return this.http.get('users/profile', {headers: headers})
+    return this.http.get(this.domain+'users/profile', {headers: headers})
       .map(res => res.json());
   }
 

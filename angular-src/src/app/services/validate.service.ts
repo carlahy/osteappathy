@@ -18,4 +18,12 @@ export class ValidateService {
     return re.test(email);
   }
 
+  validatePatient(patient){
+    if(patient.patient_number == undefined) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
 }
