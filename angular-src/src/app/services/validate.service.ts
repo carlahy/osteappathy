@@ -19,7 +19,7 @@ export class ValidateService {
   }
 
   validatePatient(patient){
-    if(patient.patient_number == undefined) {
+    if(patient.patient_num == undefined) {
       return false;
     } else {
       return true;

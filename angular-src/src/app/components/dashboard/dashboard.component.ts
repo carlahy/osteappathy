@@ -11,13 +11,13 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 })
 export class DashboardComponent implements OnInit {
   // Properties
-  patient_number: String;
+  patient_num: String;
   sex: String;
   age: number;
   occupation: String;
   case: Object;
   selected_patient: Object;
-  patients: [Object];
+  patients;
 
   constructor(
     private validateService:ValidateService,
@@ -26,19 +26,22 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.patientService.getPatients().subscribe(patients => {
-      for (var p in patients) {
-        this.patients.push(p);
-      }
-    }, err => {
-      console.log('Error '+err);
-      return false;
+    this.patientService.getPatients().subscribe(data => {
+      this.patients = [];
+      if(data.success) {
+        for (var p in data.patients) {
+          this.patients.push(data.patients[p]);
+        }
+        console.log(this.patients);
+      } else {
+          this.flashMessage.show('Something went wrong, patients could not be loaded', {cssClass: 'alert-danger', timeout:3000});
+        }
     })
   }
 
   createPatient() {
     const patient = {
-      patient_number: this.patient_number,
+      patient_num: this.patient_num,
       sex: this.sex,
       age: this.age,
       occupation: this.occupation,
