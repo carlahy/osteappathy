@@ -1,23 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ValidateService } from '../../services/validate.service';
 import { PatientService } from '../../services/patient.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
-
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
+
 export class DashboardComponent implements OnInit {
-  // Properties
+
   patient_num: String;
   sex: String;
-  age: number;
+  dob: Date;
   occupation: String;
-  case: Object;
+  // consult: Object;
+  consult_date:number = Date.now();
+  body_part:String;
+  injury_detail:String;
+  stage: String;
+  // TODO: add treatments, discharge
+  // ongoing: Boolean;
   selected_patient: Object;
   patients;
+  completed;
 
   constructor(
     private validateService:ValidateService,
@@ -26,6 +33,8 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.patients = [];
+    this.completed = [];
     this.patientService.getPatients().subscribe(data => {
       this.patients = [];
       if(data.success) {
@@ -40,12 +49,17 @@ export class DashboardComponent implements OnInit {
   }
 
   createPatient() {
+    const today = new Date();
     const patient = {
       patient_num: this.patient_num,
       sex: this.sex,
-      age: this.age,
+      dob: this.dob,
+      age: this.dob.getTime() - today.getTime(),
       occupation: this.occupation,
-      case: this.case
+      consult_date: this.consult_date,
+      body_part: this.body_part,
+      injury_detail: this.injury_detail,
+      stage: this.stage
     };
 
     // Required fields
@@ -66,8 +80,36 @@ export class DashboardComponent implements OnInit {
   }
 
   onSelectPatient(patient) {
-    // TODO: zoom in on patient
     this.selected_patient = patient;
+    return true;
+  }
+
+  isSelectedPatient() {
+    if (this.selected_patient == undefined) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  onSavePatient(patient) {
+    // TODO: update in DB
+  }
+
+  hasOngoingPatients() {
+    if (this.patients.length > 0) {
+      return true;
+    } else {
+      return false
+    }
+  }
+
+  hasCompletedPatients(){
+    if(this.completed.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }
