@@ -22,7 +22,7 @@
       </div>
       <div class="form-group form-inline">
         <label class="control-label col-sm-2">DOB</label>
-        <input type="date" [ngModel]="dob | date:'yyyy-MM-dd'" name="dob" class="form-control"/>
+        <input type="date" [(ngModel)]="dob" name="dob" class="form-control"/>
       </div>
       <div class="form-group form-inline">
         <label class="control-label col-sm-2">Occupation</label>
@@ -34,7 +34,7 @@
       </div>
       <div class="form-group form-inline">
         <label class="control-label col-sm-2">Consult date</label>
-        <input type="date" [ngModel]="consult_date | date:'y-MM-dd'" name="consult_date" class="form-control"/>
+        <input type="date" [(ngModel)]="consult_date" name="consult_date"  class="form-control"/>
       </div>
       <div class="form-group form-inline">
         <label class="control-label col-sm-2">Body part</label>
@@ -82,83 +82,6 @@
 
 <!-- Edit Patient -->
 <app-patient-edit></app-patient-edit>
-<div class="modal fade" role="dialog" id="patientModal" *ngIf="isSelectedPatient()">
-  <div class="modal-dialog">
-  <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Edit Patient {{selected_patient.patient_num}}</h4>
-      </div>
-      <div class="modal-body">
-        <!-- Patient Form to Edit -->
-        <form (submit)="updatePatient()" class="form-horizontal" autocomplete="off">
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-2">Patient Number</label>
-            <input type="text" [(ngModel)]="selected_patient.patient_num" name="patient_num" class="form-control">
-          </div>
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-2">Sex</label>
-            <select class="form-control" [(ngModel)]="selected_patient.sex" name="sex">
-              <option>Male</option>
-              <option>Female</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-2">DOB</label>
-            <input type="number" [(ngModel)]="selected_patient.dob" name="dob" class="form-control">
-          </div>
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-2">Occupation</label>
-            <select class="form-control" [(ngModel)]="selected_patient.occupation" name="occupation">
-              <option>Office worker</option>
-              <option>Teacher</option>
-              <option>Retired</option>
-            </select>
-          </div>
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-2">Consult date</label>
-            <input type="text" [(ngModel)]="consult_date" name="selected_patient.consult_date" class="form-control">
-          </div>
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-2">Body part</label>
-            <select class="form-control" [(ngModel)]="selected_patient.body_part" name="body_part">
-              <option>Lower back</option>
-              <option>Neck</option>
-              <option>Shoulder</option>
-              <option>Ankle</option>
-            </select>
-          </div>
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-2">Injury detail</label>
-            <select class="form-control" [(ngModel)]="selected_patient.injury_detail" name="injury_detail">
-              <option>Facet Joint Irritation</option>
-              <option>Lumbar Disc Prolapse</option>
-              <option>Thoracic Outlet Syndrome</option>
-              <option>Supraspinatus Tendinopathy</option>
-              <option>Sprained Ligament</option>
-            </select>
-          </div>
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-2">Stage</label>
-            <select class="form-control" [(ngModel)]="selected_patient.stage" name="stage">
-              <option>Acute</option>
-              <option>Chronic</option>
-            </select>
-          </div>
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-2">Add a treatment</label>
-          </div>
-          <input type="submit" class="btn btn-primary" value="Save">
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onSavePatient()">Save</button>
-      </div>
-    </div>
-  </div>
-</div>
 
   <!-- Completed Patients -->
   <div class="col-md-6">

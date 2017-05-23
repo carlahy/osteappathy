@@ -10,19 +10,18 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 })
 
 export class DashboardComponent implements OnInit {
-
-  patient_num: String;
+  // Properties
+  patient_num: Number;
   sex: String;
   dob: Date;
   occupation: String;
   // consult: Object;
-  consult_date:number = Date.now();
+  consult_date: Date;
   body_part:String;
   injury_detail:String;
   stage: String;
   // TODO: add treatments, discharge
   // ongoing: Boolean;
-  selected_patient: Object;
   patients;
   completed;
 
@@ -33,30 +32,47 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // this.consult_date = new Date();
     this.patients = [];
     this.completed = [];
+    this.getPatients();
+  }
+
+  getPatients(){
     this.patientService.getPatients().subscribe(data => {
       this.patients = [];
       if(data.success) {
         for (var p in data.patients) {
           this.patients.push(data.patients[p]);
         }
-        console.log(this.patients);
       } else {
           this.flashMessage.show('Something went wrong, patients could not be loaded', {cssClass: 'alert-danger', timeout:3000});
         }
     })
   }
 
+  // Date inputs are binded as strings, convert to Date object
+  parseDate(date){
+    const d = {
+      year: parseInt(date.split("-")[0]),
+      month: parseInt(date.split("-")[1])-1,
+      day: parseInt(date.split("-")[2])
+    };
+    return new Date(d.year,d.month,d.day);
+  }
+
   createPatient() {
-    const today = new Date();
+    const dob = this.parseDate(this.dob);
+    const ageDate = new Date(Date.now() - dob.getTime());
+    const age = Math.abs(ageDate.getUTCFullYear() - 1970);
+
     const patient = {
       patient_num: this.patient_num,
       sex: this.sex,
-      dob: this.dob,
-      age: this.dob.getTime() - today.getTime(),
+      dob: dob,
+      age: age,
       occupation: this.occupation,
-      consult_date: this.consult_date,
+      consult_date: this.parseDate(this.consult_date),
       body_part: this.body_part,
       injury_detail: this.injury_detail,
       stage: this.stage
@@ -71,25 +87,23 @@ export class DashboardComponent implements OnInit {
     // Create patient
     this.patientService.createPatient(patient).subscribe(data => {
       if(data.success) {
+        console.log('Create successful');
         this.flashMessage.show('New patient was created', {cssClass: 'alert-success', timeout:3000});
+        this.getPatients();
       } else {
+        console.log('Create unsuccessful');
         this.flashMessage.show('Something went wrong, patient could not be created', {cssClass: 'alert-danger', timeout:3000});
       }
     });
 
   }
 
-  onSelectPatient(patient) {
-    this.selected_patient = patient;
-    return true;
-  }
+  // Set selected patient
 
-  isSelectedPatient() {
-    if (this.selected_patient == undefined) {
-      return false;
-    } else {
-      return true;
-    }
+  onSelectPatient(patient) {
+    this.patientService.setSelectedPatient(patient);
+    
+    return true;
   }
 
   onSavePatient(patient) {
