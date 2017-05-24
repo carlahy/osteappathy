@@ -7,7 +7,8 @@ export class PatientService {
   constructor(private http:Http) { }
 
   // Set to empty string for heroku prod
-  domain:String = 'http://localhost:3000/'
+  domain:String = 'http://localhost:3000/';
+  private selected_patient: any;
 
   getPatients(){
     let headers = new Headers();
@@ -23,4 +24,11 @@ export class PatientService {
       .map(res => res.json());
   }
 
+  setSelectedPatient(patient) {
+    return this.selected_patient = patient;
+  }
+
+  getSelectedPatient(){
+    return this.selected_patient;
+  }
 }

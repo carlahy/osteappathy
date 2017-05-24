@@ -8,16 +8,39 @@ const PatientSchema = mongoose.Schema({
     required: true
   },
   sex: {
-    type: String
+    type: String,
+    required: true
+  },
+  dob: {
+    type: Date,
+    required: true
   },
   age: {
-    type: Number
+    type: Number,
+    required: true
   },
   occupation: {
-    type: String
+    type: String,
+    required: true
   },
-  case: {
-    type: Object
+  consult_date: {
+    type: Date,
+    required: true
+  },
+  body_part: {
+    type: String,
+    required: true
+  },
+  injury_detail: {
+    type: String,
+    required: true
+  },
+  stage: {
+    type: String,
+    required: true
+  },
+  discharged: {
+    type: Boolean
   }
 });
 

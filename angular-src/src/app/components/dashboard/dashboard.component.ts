@@ -22,8 +22,8 @@ export class DashboardComponent implements OnInit {
   stage: String;
   // TODO: add treatments, discharge
   // ongoing: Boolean;
-  patients;
-  completed;
+  ongoing_patients = [];
+  discharged_patients = [];
 
   constructor(
     private validateService:ValidateService,
@@ -32,18 +32,24 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.consult_date = new Date();
-    this.patients = [];
-    this.completed = [];
+    this.consult_date = new Date();
+    console.log(this.consult_date);
+    this.ongoing_patients = [];
+    this.discharged_patients = [];
     this.getPatients();
   }
 
   getPatients(){
     this.patientService.getPatients().subscribe(data => {
-      this.patients = [];
+
       if(data.success) {
         for (var p in data.patients) {
-          this.patients.push(data.patients[p]);
+          if (data.patients[p].discharged == false) {
+            this.ongoing_patients.push(data.patients[p]);
+          } else {
+            this.discharged_patients.push(data.patients[p]);
+          }
+
         }
       } else {
           this.flashMessage.show('Something went wrong, patients could not be loaded', {cssClass: 'alert-danger', timeout:3000});
@@ -87,11 +93,9 @@ export class DashboardComponent implements OnInit {
     // Create patient
     this.patientService.createPatient(patient).subscribe(data => {
       if(data.success) {
-        console.log('Create successful');
         this.flashMessage.show('New patient was created', {cssClass: 'alert-success', timeout:3000});
         this.getPatients();
       } else {
-        console.log('Create unsuccessful');
         this.flashMessage.show('Something went wrong, patient could not be created', {cssClass: 'alert-danger', timeout:3000});
       }
     });
@@ -102,7 +106,6 @@ export class DashboardComponent implements OnInit {
 
   onSelectPatient(patient) {
     this.patientService.setSelectedPatient(patient);
-    
     return true;
   }
 
@@ -111,15 +114,15 @@ export class DashboardComponent implements OnInit {
   }
 
   hasOngoingPatients() {
-    if (this.patients.length > 0) {
+    if (this.ongoing_patients.length > 0) {
       return true;
     } else {
-      return false
+      return false;
     }
   }
 
-  hasCompletedPatients(){
-    if(this.completed.length > 0) {
+  hasDischargedPatients(){
+    if(this.discharged_patients.length > 0) {
       return true;
     } else {
       return false;

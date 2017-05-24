@@ -19,6 +19,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { PatientService } from './services/patient.service';
 import { PatientEditComponent } from './components/patient-edit/patient-edit.component';
 
+
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
   {path:'register', component: RegisterComponent},

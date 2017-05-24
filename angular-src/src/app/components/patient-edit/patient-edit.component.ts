@@ -8,20 +8,21 @@ import { PatientService } from '../../services/patient.service';
 })
 export class PatientEditComponent implements OnInit {
 
-  selected_patient: Object;
+  selected_patient: any;
 
   constructor(
     private patientService:PatientService
   ) { }
 
   ngOnInit() {
-    this.selected_patient = this.patientService.selected_patient;
+    this.selected_patient = this.patientService.getSelectedPatient();
   }
 
   isSelectedPatient() {
-    if (this.patientService.selected_patient == undefined) {
+    if (this.patientService.getSelectedPatient() == undefined) {
       return false;
     } else {
+      this.selected_patient = this.patientService.getSelectedPatient();
       return true;
     }
   }

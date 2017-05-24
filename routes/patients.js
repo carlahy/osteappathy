@@ -10,13 +10,18 @@ router.post('/create', (req, res, next) => {
   let newPatient = new Patient({
     patient_num: req.body.patient_num,
     sex: req.body.sex,
+    dob: req.body.dob,
     age: req.body.age,
     occupation: req.body.occupation,
-    case: req.body.case
+    consult_date: req.body.consult_date,
+    body_part: req.body.body_part,
+    injury_detail: req.body.injury_detail,
+    stage: req.body.stage
   });
 
   Patient.addPatient(newPatient, (err,patient) => {
     if(err) {
+      console.log(err);
       res.json({success:false, msg:'Failed to create new patient'});
     } else {
       res.json({success:true, msg:'Patient created'});
