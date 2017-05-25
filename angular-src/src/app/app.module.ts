@@ -18,6 +18,8 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { PatientService } from './services/patient.service';
 import { PatientEditComponent } from './components/patient-edit/patient-edit.component';
+import { TreatmentComponent } from './components/treatment/treatment.component';
+import { PatientCreateComponent } from './components/patient-create/patient-create.component';
 
 
 const appRoutes: Routes = [
@@ -37,7 +39,9 @@ const appRoutes: Routes = [
     HomeComponent,
     DashboardComponent,
     ProfileComponent,
-    PatientEditComponent
+    PatientEditComponent,
+    TreatmentComponent,
+    PatientCreateComponent
   ],
   imports: [
     BrowserModule,

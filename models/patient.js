@@ -5,6 +5,7 @@ const config = require('../config/database');
 const PatientSchema = mongoose.Schema({
   patient_num: {
     type: Number,
+    unique: true,
     required: true
   },
   sex: {
@@ -23,10 +24,6 @@ const PatientSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  consult_date: {
-    type: Date,
-    required: true
-  },
   body_part: {
     type: String,
     required: true
@@ -39,8 +36,15 @@ const PatientSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  treatments: [{
+    date: Date,
+    vas: Number,
+    qal: Number,
+    notes: String
+  }],
   discharged: {
-    type: Boolean
+    type: Boolean,
+    required: false
   }
 });
 

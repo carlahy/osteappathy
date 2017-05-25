@@ -18,12 +18,4 @@ export class ValidateService {
     return re.test(email);
   }
 
-  validatePatient(patient){
-    if(patient.patient_num == undefined || patient.sex == undefined || patient.dob == undefined || patient.occupation == undefined || patient.consult_date == undefined || patient.body_part == undefined || patient.injury_detail == undefined || patient.stage == undefined) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
 }
