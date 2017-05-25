@@ -1,0 +1,69 @@
+<!-- <div class="row collapse" id="newPatient"> -->
+<div class="modal fade" id="newPatient" role="dialog">
+  <br>
+  <!-- <div class="col-md-8"> -->
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">New Patient</h4>
+      </div>
+      <div class="modal-body">
+        <form (submit)="createPatient()" class="form-horizontal" autocomplete="off">
+          <div class="form-group form-inline">
+            <label class="control-label col-sm-4">Patient Number</label>
+            <input type="text" [(ngModel)]="patientService.patient_num" name="patient_num" class="form-control focusedInput">
+          </div>
+          <div class="form-group form-inline">
+            <label class="control-label col-sm-4">Sex</label>
+            <select class="form-control" [(ngModel)]="patientService.sex" name="sex">
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group form-inline">
+            <label class="control-label col-sm-4">DOB</label>
+            <input type="date" [(ngModel)]="patientService.dob" name="dob" class="form-control"/>
+          </div>
+          <div class="form-group form-inline">
+            <label class="control-label col-sm-4">Occupation</label>
+            <select class="form-control" [(ngModel)]="patientService.occupation" name="occupation">
+              <option>Office worker</option>
+              <option>Teacher</option>
+              <option>Retired</option>
+            </select>
+          </div>
+          <div class="form-group form-inline">
+            <label class="control-label col-sm-4">Body part</label>
+            <select class="form-control" [(ngModel)]="patientService.body_part" name="body_part">
+              <option>Lower back</option>
+              <option>Neck</option>
+              <option>Shoulder</option>
+              <option>Ankle</option>
+            </select>
+          </div>
+          <div class="form-group form-inline">
+            <label class="control-label col-sm-4">Injury detail</label>
+            <select class="form-control" [(ngModel)]="patientService.injury_detail" name="injury_detail">
+              <option>Facet Joint Irritation</option>
+              <option>Lumbar Disc Prolapse</option>
+              <option>Thoracic Outlet Syndrome</option>
+              <option>Supraspinatus Tendinopathy</option>
+              <option>Sprained Ligament</option>
+            </select>
+          </div>
+          <div class="form-group form-inline">
+            <label class="control-label col-sm-4">Stage</label>
+            <select class="form-control" [(ngModel)]="patientService.stage" name="stage">
+              <option>Acute</option>
+              <option>Chronic</option>
+            </select>
+          </div>
+          <p>This treatment is the consult</p>
+          <app-treatment></app-treatment>
+          <input type="submit" class="btn btn-primary" value="Submit">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,72 +1,14 @@
 <h2 class="page-header">Dashboard</h2>
 <p>Welcome to your dashboard: add new patients, edit current patients, and generate reports.</p>
 
-<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#newPatient">Create new patient</button>
-
 <!-- New Patient -->
-<div class="row collapse" id="newPatient">
-  <br>
-  <div class="col-md-8">
-    <form (submit)="createPatient()" class="form-horizontal" autocomplete="off">
-      <div class="form-group form-inline">
-        <label class="control-label col-sm-2">Patient Number</label>
-        <input type="text" [(ngModel)]="patient_num" name="patient_num" class="form-control focusedInput">
-      </div>
-      <div class="form-group form-inline">
-        <label class="control-label col-sm-2">Sex</label>
-        <select class="form-control" [(ngModel)]="sex" name="sex">
-          <option>Male</option>
-          <option>Female</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="form-group form-inline">
-        <label class="control-label col-sm-2">DOB</label>
-        <input type="date" [(ngModel)]="dob" name="dob" class="form-control"/>
-      </div>
-      <div class="form-group form-inline">
-        <label class="control-label col-sm-2">Occupation</label>
-        <select class="form-control" [(ngModel)]="occupation" name="occupation">
-          <option>Office worker</option>
-          <option>Teacher</option>
-          <option>Retired</option>
-        </select>
-      </div>
-      <div class="form-group form-inline">
-        <label class="control-label col-sm-2">Consult date</label>
-        <input type="date" [(ngModel)]="consult_date" name="consult_date"  class="form-control"/>
-      </div>
-      <div class="form-group form-inline">
-        <label class="control-label col-sm-2">Body part</label>
-        <select class="form-control" [(ngModel)]="body_part" name="body_part">
-          <option>Lower back</option>
-          <option>Neck</option>
-          <option>Shoulder</option>
-          <option>Ankle</option>
-        </select>
-      </div>
-      <div class="form-group form-inline">
-        <label class="control-label col-sm-2">Injury detail</label>
-        <select class="form-control" [(ngModel)]="injury_detail" name="injury_detail">
-          <option>Facet Joint Irritation</option>
-          <option>Lumbar Disc Prolapse</option>
-          <option>Thoracic Outlet Syndrome</option>
-          <option>Supraspinatus Tendinopathy</option>
-          <option>Sprained Ligament</option>
-        </select>
-      </div>
-      <div class="form-group form-inline">
-        <label class="control-label col-sm-2">Stage</label>
-        <select class="form-control" [(ngModel)]="stage" name="stage">
-          <option>Acute</option>
-          <option>Chronic</option>
-        </select>
-      </div>
-      <input type="submit" class="btn btn-primary" value="Submit">
-    </form>
-  </div>
-</div>
+<button type="button" class="btn btn-info" data-toggle="modal" data-target="#newPatient">Create new patient</button>
+<app-patient-create></app-patient-create>
 
+<!-- Generate Report -->
+<button type="button" class="btn btn-info" data-toggle="modal" data-target="#newPatient">Generate Report</button>
+
+<!-- Display Patients -->
 <div class="row">
   <!-- Ongoing Patients -->
   <div class="col-md-6">
@@ -79,9 +21,6 @@
       </a>
     </ul>
   </div>
-
-<!-- Edit Patient -->
-<app-patient-edit></app-patient-edit>
 
   <!-- Discharged Patients -->
   <div class="col-md-6">

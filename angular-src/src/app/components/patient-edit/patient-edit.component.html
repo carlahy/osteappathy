@@ -33,10 +33,6 @@
             </select>
           </div>
           <div class="form-group form-inline">
-            <label class="control-label col-sm-4">Consult date</label>
-            <input type="date" [(ngModel)]="selected_patient.consult_date" name="consult_date"  class="form-control"/>
-          </div>
-          <div class="form-group form-inline">
             <label class="control-label col-sm-4">Body part</label>
             <select class="form-control" [(ngModel)]="selected_patient.body_part" name="body_part">
               <option>Lower back</option>
@@ -62,30 +58,36 @@
               <option>Chronic</option>
             </select>
           </div>
+
+          <!-- Show Treatments -->
+          <div class="form-group form-inline">
+            <label class="control-label col-sm-4">See treatments</label>
+            <!-- <button type="button" class="btn btn-info control-label col-sm-4" data-toggle="collapse" data-target="#showTreatments">See treatment(s)</button> -->
+          </div>
+          <!-- <app-treatment id="showTreatments"></app-treatment> -->
+
+          <!-- New Treatment -->
           <div class="form-group form-inline">
             <label class="control-label col-sm-4">Add treatment</label>
-
+            <!-- <button type="button" class="btn" aria-label="Add" data-toggle="collapse" data-target="#addTreatment">
+              <span class="glyphicon glyphicon-align-plus" aria-hidden="true"></span>
+            </button> -->
           </div>
+          <!-- <app-treatment class="" id="addTreatment"></app-treatment> -->
+
+          <!-- Last Treatment -->
           <div class="form-group form-inline">
             <label class="control-label col-sm-4">Discharge</label>
-            <input type="checkbox" [(ngModel)]="selected_patient.discharged" name="consult_date"  class="form-control"/>
+            <!-- <button type="button" class="btn btn-warning col-sm-4" data-toggle="collapse" data-target="">Discharge</button>
+            <input type="checkbox" [(ngModel)]="selected_patient.discharged" name="consult_date"  class="form-control"/> -->
           </div>
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-4">Stopped Attending</label>
+          <!-- <div class="form-group form-inline">
+            <button type="button" class="btn btn-warning col-sm-4" data-toggle="collapse" data-target="">Stopped attending</button>
             <input type="checkbox" [(ngModel)]="selected_patient.stopped_attending" name="consult_date"  class="form-control"/>
-          </div>
-
-          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="addTreatment()">Add treatment</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="discharge()">Discharge</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="discharge()">Stopped Attending</button>
-<!-- 
-          <input type="submit" class="btn btn-primary" value="Save"> -->
+          </div> -->
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="addTreatment()">Add treatment</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="discharge()">Discharge</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="discharge()">Stopped Attending</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onSavePatient()">Save</button>
       </div>
     </div>

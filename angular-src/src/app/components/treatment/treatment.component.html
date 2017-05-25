@@ -1,0 +1,16 @@
+<div class="form-group form-inline">
+  <label class="control-label col-sm-4">Treatment date</label>
+  <input type="date" [(ngModel)]="patientService.treatment_date" name="treatment_date"  class="form-control"/>
+</div>
+<div class="form-group form-inline">
+  <label class="control-label col-sm-4">VAS</label>
+  <input type="number" [(ngModel)]="patientService.vas" name="vas"  class="form-control" min="0" max="10"/>
+</div>
+<div class="form-group form-inline">
+  <label class="control-label col-sm-4">QAL</label>
+  <input type="range" [(ngModel)]="patientService.qal" name="qal"  class="form-control" min="0" max="10"/> {{patientService.qal}}
+</div>
+<div class="form-group form-inline">
+  <label class="control-label col-sm-4">Notes</label>
+  <input type="text" [(ngModel)]="patientService.notes" name="notes"  class="form-control"/>
+</div>
