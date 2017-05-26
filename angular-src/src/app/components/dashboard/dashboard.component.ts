@@ -44,11 +44,6 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-
-  onSavePatient(patient) {
-    // TODO: update in DB
-  }
-
   hasOngoingPatients() {
     if (this.ongoing_patients.length > 0) {
       return true;

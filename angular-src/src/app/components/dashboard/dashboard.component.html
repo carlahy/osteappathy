@@ -15,9 +15,10 @@
     <h2>Ongoing Patients</h2>
     <ul *ngIf="hasOngoingPatients()" class="list-group">
       <a *ngFor="let patient of ongoing_patients" (click)="patientService.setSelectedPatient(patient)" class="list-group-item" style="cursor: pointer" data-toggle="modal" data-target="#editPatient">
-          <h4>{{patient.patient_num}}</h4>
-          <span>{{patient.sex}}, age {{patient.age}}, {{patient.occupation}}</span>
-          <p>{{patient.case}}</p>
+          <h4>Patient {{patient.patient_num}}</h4>
+          <span>{{patient.sex}}, {{patient.age}}, {{patient.occupation}}</span>
+          <br>
+          <span><b>{{patient.body_part}}</b> problem, specifically {{patient.stage}} <b>{{patient.injury_detail}}</b></span>
       </a>
     </ul>
   </div>
@@ -27,9 +28,10 @@
     <h2>Discharged Patients</h2>
     <ul *ngIf="hasDischargedPatients()" class="list-group">
       <span *ngFor="let patient of discharged_patients"  class="list-group-item" style="cursor: pointer" data-toggle="modal" data-target="#editPatient" (click)="patientService.setSelectedPatient(patient)">
-          <h4>{{patient.patient_num}}</h4>
-          <span>{{patient.sex}}, age {{patient.age}}, {{patient.occupation}}</span>
-          <p>{{patient.case}}</p>
+        <h4>Patient {{patient.patient_num}}</h4>
+        <span>{{patient.sex}}, {{patient.age}}, {{patient.occupation}}</span>
+        <br>
+        <span><b>{{patient.body_part}}</b> problem, specifically {{patient.stage}} <b>{{patient.injury_detail}}</b></span>
       </span>
     </ul>
   </div>
