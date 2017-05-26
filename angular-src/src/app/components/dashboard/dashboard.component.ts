@@ -44,12 +44,6 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  // Set selected patient
-
-  onSelectPatient(patient) {
-    this.patientService.setSelectedPatient(patient);
-    return true;
-  }
 
   onSavePatient(patient) {
     // TODO: update in DB

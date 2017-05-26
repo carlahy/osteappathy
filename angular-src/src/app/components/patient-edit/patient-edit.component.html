@@ -1,10 +1,11 @@
-<div class="modal fade" role="dialog" id="patientModal" *ngIf="isSelectedPatient()">
+<div class="modal fade" id="editPatient" role="dialog" *ngIf="getSelectedPatient()">
   <div class="modal-dialog">
   <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Edit Patient {{selected_patient.patient_num}}</h4>
       </div>
+      <flash-messages></flash-messages>
       <div class="modal-body">
         <!-- Patient Form to Edit -->
         <form (submit)="updatePatient()" class="form-horizontal" autocomplete="off">

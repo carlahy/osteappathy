@@ -14,7 +14,7 @@
   <div class="col-md-6">
     <h2>Ongoing Patients</h2>
     <ul *ngIf="hasOngoingPatients()" class="list-group">
-      <a *ngFor="let patient of ongoing_patients" (click)="onSelectPatient(patient)" class="list-group-item" style="cursor: pointer" data-toggle="modal" data-target="#patientModal">
+      <a *ngFor="let patient of ongoing_patients" (click)="patientService.setSelectedPatient(patient)" class="list-group-item" style="cursor: pointer" data-toggle="modal" data-target="#editPatient">
           <h4>{{patient.patient_num}}</h4>
           <span>{{patient.sex}}, age {{patient.age}}, {{patient.occupation}}</span>
           <p>{{patient.case}}</p>
@@ -26,11 +26,12 @@
   <div class="col-md-6">
     <h2>Discharged Patients</h2>
     <ul *ngIf="hasDischargedPatients()" class="list-group">
-      <a *ngFor="let patient of discharged_patients" (click)="onSelectPatient(patient)" class="list-group-item" style="cursor: pointer" data-toggle="modal" data-target="#patientModal">
+      <span *ngFor="let patient of discharged_patients"  class="list-group-item" style="cursor: pointer" data-toggle="modal" data-target="#editPatient" (click)="patientService.setSelectedPatient(patient)">
           <h4>{{patient.patient_num}}</h4>
           <span>{{patient.sex}}, age {{patient.age}}, {{patient.occupation}}</span>
           <p>{{patient.case}}</p>
-      </a>
+      </span>
     </ul>
   </div>
+  <app-patient-edit></app-patient-edit>
 </div>

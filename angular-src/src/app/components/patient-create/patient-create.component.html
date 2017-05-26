@@ -1,12 +1,10 @@
-<!-- <div class="row collapse" id="newPatient"> -->
 <div class="modal fade" id="newPatient" role="dialog">
-  <br>
-  <!-- <div class="col-md-8"> -->
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">New Patient</h4>
       </div>
+      <flash-messages></flash-messages>
       <div class="modal-body">
         <form (submit)="createPatient()" class="form-horizontal" autocomplete="off">
           <div class="form-group form-inline">

@@ -23,9 +23,13 @@ router.post('/create', (req, res, next) => {
 
   Patient.addPatient(newPatient, (err,patient) => {
     if(err) {
-      res.json({success:false, msg:'Failed to create new patient'});
+      if(err.code == 11000) { // Duplicate key error (for patient_num)
+        res.json({success:false, msg:'Patient could not be created: patient number is already in use'});
+      } else {
+        res.json({success:false, msg:'Something went wrong, patient could not be created', err:err});
+      }
     } else {
-      res.json({success:true, msg:'Patient created'});
+      res.json({success:true, msg:'New patient was created'});
     }
   });
 });

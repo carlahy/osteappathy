@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PatientService } from '../../services/patient.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { PatientService } from '../../services/patient.service';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-patient-edit',
@@ -13,14 +14,18 @@ export class PatientEditComponent implements OnInit {
 
   constructor(
     private flashMessage:FlashMessagesService,
-    private patientService:PatientService
-  ) { }
-
-  ngOnInit() {
-    // this.selected_patient = this.patientService.getSelectedPatient();
+    private patientService:PatientService,
+    private dashboardComponent:DashboardComponent
+  ) {
+    this.patientService = patientService;
+    this.dashboardComponent = dashboardComponent;
   }
 
-  isSelectedPatient() {
+  ngOnInit() {
+    this.selected_patient = this.patientService.getSelectedPatient();
+  }
+
+  getSelectedPatient() {
     if (this.patientService.getSelectedPatient() == undefined) {
       return false;
     } else {

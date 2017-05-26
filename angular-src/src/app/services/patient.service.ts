@@ -57,7 +57,7 @@ export class PatientService {
   }
 
   setSelectedPatient(patient) {
-    return this.selected_patient = patient;
+    this.selected_patient = patient;
   }
 
   getSelectedPatient(){

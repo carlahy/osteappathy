@@ -35,10 +35,11 @@ export class PatientCreateComponent implements OnInit {
     // Create patient
     this.patientService.createPatient(newPatient).subscribe(data => {
       if(data.success) {
-        this.flashMessage.show('New patient was created', {cssClass: 'alert-success', timeout:3000});
+        this.flashMessage.show(data.msg, {cssClass: 'alert-success', timeout:3000});
         this.patientService.getPatients();
       } else {
-        this.flashMessage.show('Something went wrong, patient could not be created', {cssClass: 'alert-danger', timeout:3000});
+        console.log(data);
+        this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout:3000});
       }
     });
     this.dashboardComponent.getPatients();
