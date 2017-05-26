@@ -21,6 +21,9 @@ import { PatientEditComponent } from './components/patient-edit/patient-edit.com
 import { TreatmentComponent } from './components/treatment/treatment.component';
 import { PatientCreateComponent } from './components/patient-create/patient-create.component';
 
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { BarChartComponent } from './components/bar-chart/bar-chart.component';
+
 
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
@@ -41,14 +44,16 @@ const appRoutes: Routes = [
     ProfileComponent,
     PatientEditComponent,
     TreatmentComponent,
-    PatientCreateComponent
+    PatientCreateComponent,
+    BarChartComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes),
-    FlashMessagesModule
+    FlashMessagesModule,
+    ChartsModule
   ],
   providers: [ValidateService, AuthService, AuthGuard, PatientService],
   bootstrap: [AppComponent]
