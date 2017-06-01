@@ -7,7 +7,8 @@ export class PatientService {
   constructor(private http:Http) { }
 
   // Set to empty string for heroku prod
-  domain:String = 'http://localhost:3000/';
+  // domain:String = 'http://localhost:3000/';
+  domain:String = ""
 
   // Properties
   patient_num: Number;

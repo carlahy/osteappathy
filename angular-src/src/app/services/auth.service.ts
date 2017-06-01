@@ -11,7 +11,8 @@ export class AuthService {
   constructor(private http:Http) { }
 
   // Set to empty string for heroku prod
-  domain:String = 'http://localhost:3000/'
+  // domain:String = 'http://localhost:3000/'
+  domain:String =""
 
   registerUser(user){
     let headers = new Headers();
