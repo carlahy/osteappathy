@@ -1,58 +1,115 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { URLSearchParams, Http, Headers } from '@angular/http';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class PatientService {
 
-  constructor(private http:Http) { }
+  constructor(
+    private http:Http,
+    private authService:AuthService,
+  ) {
+      this.authService = authService;
+      // Set user id for this session
+      this.user_id = this.authService.getUserId();
+      this.isDev = false;
+      this.new_patient = {};
+      this.new_treatment = {};
+      let headers = new Headers();
+      headers.append('Content-Type','application/json');
+      let ep = this.prepEndpoint('resources/');
+      this.http.get(ep, {headers:headers})
+        .map(res => res.json())
+        .subscribe(data => {
+          if(data.success) {
+            this.patient_resource = [];
+            this.treatment_resource = [];
 
-  // Set to empty string for heroku prod
-  domain:String = 'http://localhost:3000/';
+            for (var r in data.resources) {
+              if (data.resources[r].for == "Patient") {
+                this.patient_resource.push(data.resources[r]);
+                this.new_patient[data.resources[r].key] = undefined;
+              } else {
+                this.treatment_resource.push(data.resources[r]);
+                this.new_treatment[data.resources[r].key] = undefined;
+              }
+            }
+          } else {
+              console.log('Something went wrong, patients could not be loaded');
+            }
+        });
+  }
 
   // Properties
-  patient_num: Number;
-  sex: String;
-  dob: Date;
-  occupation: String;
-  body_part:String;
-  injury_detail:String;
-  stage: String;
-  treatments: [Object];
-  treatment_date: Date;
-  vas: Number;
-  qal: Number;
-  notes: String;
-  discharged: Boolean;
-  private selected_patient: Object;
+
+  patient_resource:any[];
+  treatment_resource:any[];
+
+  new_patient:any;
+  new_treatment:any;
+  selected_patient: Object;
+
+  ongoing_patients = [];
+  discharged_patients = [];
+
+  user_id:String;
+
+  isDev:boolean;
 
   getPatients(){
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
-    return this.http.get(this.domain+'patients/readall', {headers:headers})
-      .map(res => res.json());
+
+    this.authService.getPatientList().subscribe(data => {
+      if(data.success) {
+        let headers = new Headers();
+        headers.append('Content-Type','application/json');
+        let ep = this.prepEndpoint('patients/user');
+        let params = new URLSearchParams();
+        params.set('patient_list', data.patient_list);
+
+        this.http.get(ep, {
+          search: params,
+          headers:headers
+        })
+          .map(res => res.json())
+          .subscribe(data => {
+            if(data.success) {
+              this.ongoing_patients = [];
+              this.discharged_patients = [];
+              for (var p in data.patients) {
+                if (data.patients[p].discharged == "False") {
+                  this.ongoing_patients.push(data.patients[p]);
+                } else {
+                  this.discharged_patients.push(data.patients[p]);
+                }
+              }
+              return true;
+            } else {
+              return false;
+            }
+          });
+
+      } else {
+        console.log('Something went wrong, patients could not be loaded');
+        return false;
+      }
+    });
   }
 
   validatePatient(){
-    if(this.patient_num == undefined ||
-      this.sex == undefined ||
-      this.dob == undefined ||
-      this.occupation == undefined ||
-      this.body_part == undefined ||
-      this.injury_detail == undefined ||
-      this.stage == undefined ||
-      this.treatment_date == undefined ||
-      this.vas == undefined ||
-      this.qal == undefined) {
-      return false;
-    } else {
-      return true;
+    for(var r in this.patient_resource) {
+      if(this.new_patient[r] == undefined) {
+        return false;
+      } else {
+        return true;
+      }
     }
   }
 
   createPatient(patient){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.post(this.domain+'patients/create', patient, {headers:headers})
+    let ep = this.prepEndpoint('patients/create');
+    return this.http.post(ep, patient, {headers:headers})
       .map(res => res.json());
   }
 
@@ -75,36 +132,22 @@ export class PatientService {
   }
 
   getNewPatient() {
-    const dob = this.parseDate(this.dob);
+    const dob = this.parseDate(this.new_patient.DOB);
     const ageDate = new Date(Date.now() - dob.getTime());
     const age =  Math.abs(ageDate.getUTCFullYear() - 1970);
 
-    return {
-      patient_num: this.patient_num,
-      sex: this.sex,
-      dob: dob,
-      age: age,
-      occupation: this.occupation,
-      body_part:this.body_part,
-      injury_detail: this.injury_detail,
-      stage: this.stage,
-      treatments: [{
-        treatment_date: this.parseDate(this.treatment_date),
-        vas: this.vas,
-        qal: this.qal,
-        notes: this.notes
-      }],
-      discharged: false
-    };
+    this.new_patient.Age = age;
+    this.new_patient.Treatments = [this.new_treatment];
+    // TODO: discharged
+    return this.new_patient;
   }
 
-  getTreatment(){
-    return {
-      treatment_date: this.parseDate(this.treatment_date),
-      vas: this.vas,
-      qal: this.qal,
-      notes: this.notes
-    };
+  prepEndpoint(ep){
+    if(this.isDev) {
+      return ep;
+    } else {
+      return 'http://localhost:8080/'+ep;
+    }
   }
 
 }

@@ -1,6 +1,7 @@
 <div class="row">
-  <!-- <div class="col-sm-8"> -->
+  <!-- <div class="col-sm-12"> -->
     <div style="display: block">
+      <!-- SUMMARY -->
       <canvas baseChart
               [datasets]="barChartData"
               [labels]="barChartLabels"
@@ -12,4 +13,56 @@
     </div>
     <button (click)="randomize()">Update</button>
   <!-- </div> -->
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <!-- ATTRIBUTE 1 -->
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)">
+    </canvas>
+  </div>
+  <div class="col-sm-6">
+    <!-- ATTRIBUTE 2 -->
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)">
+    </canvas>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <!-- ATTRIBUTE 3 -->
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)">
+    </canvas>
+  </div>
+  <div class="col-sm-6">
+    <!-- ATTRIBUTE 4 -->
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)">
+    </canvas>
+  </div>
 </div>

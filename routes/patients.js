@@ -3,7 +3,6 @@ const router = express.Router();
 const config = require('../config/database');
 const Patient = require('../models/patient');
 
-
 // Create patient
 
 router.post('/create', (req, res, next) => {
@@ -12,11 +11,12 @@ router.post('/create', (req, res, next) => {
     sex: req.body.sex,
     dob: req.body.dob,
     age: req.body.age,
+    ethnicity: req.body.ethnicity,
     occupation: req.body.occupation,
-    consult_date: req.body.consult_date,
-    body_part: req.body.body_part,
-    injury_detail: req.body.injury_detail,
+    site_of_complaint: req.body.site_of_complaint,
     stage: req.body.stage,
+    suitable_for_osteopathy: req.body.suitable_for_osteopathy,
+    notes: req.body.notes,
     treatments: req.body.treatments,
     discharged:req.body.discharged
   });
@@ -29,26 +29,39 @@ router.post('/create', (req, res, next) => {
         res.json({success:false, msg:'Something went wrong, patient could not be created', err:err});
       }
     } else {
+      // Add new patient ID to user patient list
+      console.log('Created patient ', patient);
       res.json({success:true, msg:'New patient was created'});
     }
   });
 });
 
-// Read patient (get)
+// Read patients for user
 
-router.get('/readall', (req,res,next) => {
-  Patient.getPatientsForUser( (err, patients) => {
+router.get('/user', (req,res,next) => {
+  Patient.getPatientsByIds( req.query.patient_list, (err, patients) => {
     if (err) throw err;
     if(!patients) {
-      return res.json({success:false,msg:'Patients not found'});
+       return res.json({success:false,msg:'Patients not found'});
     }
     return res.json({success:true,patients:patients});
   });
 });
 
-// router.get('/read', (req,res,next) => {
-//   Patient.getPatientByNumber()
-// });
+router.get('/id', (req,res,next) => {
+  Patient.getPatientById( (err, patients) => {
+    if (err) throw err;
+    if(!patients) {
+      return res.json({success:false,msg:'Patients not found'});
+    }
+    return res.json({success:true,patients:patients});
+  })
+});
+
+// Get all patients in patient db
+router.get('/all', (req,res,next) => {
+  // Patient.getPatientByNumber()
+});
 
 // Update patient
 

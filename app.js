@@ -22,10 +22,10 @@ const app = express();
 
 const users = require('./routes/users');
 const patients = require('./routes/patients');
+const resources = require('./routes/resources');
 
 // Port number
-// const port = process.env.PORT || 8080;
-const port = 3000;
+const port = process.env.PORT || 8080;
 
 // CORS middleware
 app.use(cors());
@@ -46,6 +46,7 @@ require('./config/passport')(passport)
 // Routes
 app.use('/users', users);
 app.use('/patients', patients);
+app.use('/resources', resources);
 
 // Index route
 app.get('/', (req, res) => {

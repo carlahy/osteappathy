@@ -20,6 +20,7 @@ export class PatientCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   createPatient() {
@@ -38,7 +39,6 @@ export class PatientCreateComponent implements OnInit {
         this.flashMessage.show(data.msg, {cssClass: 'alert-success', timeout:3000});
         this.patientService.getPatients();
       } else {
-        console.log(data);
         this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout:3000});
       }
     });

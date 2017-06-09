@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ValidateService } from '../../services/validate.service';
 import { PatientService } from '../../services/patient.service';
+import { AuthService } from '../../services/auth.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
@@ -11,15 +12,14 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 
 export class DashboardComponent implements OnInit {
 
-  ongoing_patients = [];
-  discharged_patients = [];
-
   constructor(
     private validateService:ValidateService,
     private flashMessage:FlashMessagesService,
-    private patientService:PatientService
+    private patientService:PatientService,
+    private authService:AuthService
   ) {
     this.patientService = patientService;
+    this.authService = authService;
   }
 
   ngOnInit() {
@@ -27,25 +27,18 @@ export class DashboardComponent implements OnInit {
   }
 
   getPatients(){
-    this.patientService.getPatients().subscribe(data => {
-      if(data.success) {
-        this.ongoing_patients = [];
-        this.discharged_patients = [];
-        for (var p in data.patients) {
-          if (data.patients[p].discharged == false) {
-            this.ongoing_patients.push(data.patients[p]);
-          } else {
-            this.discharged_patients.push(data.patients[p]);
-          }
-        }
-      } else {
-          this.flashMessage.show('Something went wrong, patients could not be loaded', {cssClass: 'alert-danger', timeout:3000});
-        }
-    })
+    let patient_list = this.authService.getPatientList();
+    let res = this.patientService.getPatients();
+    console.log(res);
+    if(!res) {
+      this.flashMessage.show('Something went wrong, patients could not be loaded', {cssClass: 'alert-danger', timeout:3000});
+    } else {
+      console.log('Successsss!');
+    }
   }
 
   hasOngoingPatients() {
-    if (this.ongoing_patients.length > 0) {
+    if (this.patientService.ongoing_patients.length > 0) {
       return true;
     } else {
       return false;
@@ -53,7 +46,7 @@ export class DashboardComponent implements OnInit {
   }
 
   hasDischargedPatients(){
-    if(this.discharged_patients.length > 0) {
+    if(this.patientService.discharged_patients.length > 0) {
       return true;
     } else {
       return false;

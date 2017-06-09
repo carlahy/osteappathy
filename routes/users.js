@@ -62,4 +62,15 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res,
   res.json({user: req.user});
 });
 
+// Get patient list for user
+router.get('/patients', (req, res, next) => {
+  User.getUserById(req.query.user_id, (err, user) => {
+    if (err) throw err;
+    if (!user.patients) {
+      return res.json({success:false,msg:'Patient list not found'});
+    }
+    return res.json({success:true,patient_list: user.patients});
+  })
+});
+
 module.exports = router;

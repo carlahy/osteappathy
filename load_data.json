@@ -1,0 +1,14 @@
+{key: "Patient Number", type:1, order:1, values:[], for:"Patient"}
+{key: "Sex",type:0, order:2, values:["Male","Female","Other"], for:"Patient"}
+{key:"DOB",type:2, order:3, values:[], for:"Patient"}
+{key : "Ethnicity", type:0, order:4, values : [ "White", "Mixed", "Asian (Indian Subcontinent)", "Black", "Chinese", "Other", "Rather not say" ], for:"Patient" }
+{key : "Occupation", type:0, order:5, values: [ "Full Time Employed", "Full Time Self Employed", "Part Time Employed", "Part Time Self Employed", "Not Currently Employed", "Retired", "Student", "No Response" ], for:"Patient" }
+{key : "Anatomical Site of Complaint", type:0, order:6, values: [ "Cervical Spine", "Thoracic Spine", "Lumbar Spine", "Sacro-iliac Joint", "Upper Extremity", "Lower Extremity" ], for:"Patient" }
+{key: "Stage", type:0, order:7, values: [ "Acute", "Chronic" ], for:"Patient" }
+{key: "Patient Suitable for Osteopathy", type:0, order:8, values: [ "Yes", "No" ], for:"Patient" }
+{key: "Notes", type:1, order:9, values: [], for:"Patient" }
+{key:"Treatment Date",type:2, order:1, values:[], for:"Treatment"}
+{key: "Type of Treatment/Management Used", type:0, order:2, values: [ "No Treatment", "Soft Tissue", "Mobilisations/Articulations", "MET", "NMT", "Myofascial Release", "Strain Counterstrain", "Visceral", "Functional Techniques", "Hydrotherapy", "Cranio-sacral", "HVLAT/Manipulation", "Relaxation", "Acupuncture", "Education", "Exercise", "Other" ], for:"Treatment" }
+{key : "VAS", type:3, order:3, values : [], for:"Treatment" }
+{key : "QAL", type:3, order:4, values : [], for:"Treatment" }
+{key: "Notes", type:1, order:5, values: [], for:"Treatment" }

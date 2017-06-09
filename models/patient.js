@@ -5,7 +5,6 @@ const config = require('../config/database');
 const PatientSchema = mongoose.Schema({
   patient_num: {
     type: Number,
-    unique: true,
     required: true
   },
   sex: {
@@ -20,15 +19,15 @@ const PatientSchema = mongoose.Schema({
     type: Number,
     required: true
   },
+  ethnicity: {
+    type: String,
+    required: true
+  },
   occupation: {
     type: String,
     required: true
   },
-  body_part: {
-    type: String,
-    required: true
-  },
-  injury_detail: {
+  site_of_complaint: {
     type: String,
     required: true
   },
@@ -36,33 +35,48 @@ const PatientSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  suitable_for_osteopathy: {
+    type: String,
+    required: true
+  },
+  notes: {
+    type: String,
+    required: false
+  },
   treatments: [{
     date: Date,
+    treatment_used: String,
     vas: Number,
     qal: Number,
     notes: String
   }],
   discharged: {
-    type: Boolean,
-    required: false
+    type: String,
+    required: true
   }
 });
 
 const Patient = module.exports = mongoose.model('Patient', PatientSchema);
 
-// module.exports.getPatientById = function(id, callback){
-//   Patient.findById(id, callback);
-// };
+module.exports.getPatientById = function(id, callback){
+  Patient.findById(id, callback);
+};
 
 module.exports.getPatientByNumber = function(patient_num, callback){
   const query = {patient_num: patient_num};
   Patient.findOne(query, callback);
 };
 
-module.exports.getPatientsForUser = function(callback){
-  // const query = {user: user};
-  // TODO: get unique user id
-  Patient.find(callback);
+module.exports.getPatientsByIds = function(patient_list,callback){
+  var ids = [];
+  patient_list = patient_list.split(',');
+  for(var p in patient_list) {
+    ids.push(mongoose.Types.ObjectId(patient_list[p]));
+  }
+  const query = {
+    '_id': { $in: ids }
+  };
+  Patient.find(query, callback);
 };
 
 module.exports.addPatient = function(newPatient, callback){
