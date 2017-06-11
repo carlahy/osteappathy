@@ -39,19 +39,14 @@ const PatientSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  notes: {
-    type: String,
-    required: false
-  },
   treatments: [{
-    date: Date,
+    treatment_date: String,
     treatment_used: String,
     vas: Number,
-    qal: Number,
-    notes: String
+    qal: Number
   }],
   discharged: {
-    type: String,
+    type: Boolean,
     required: true
   }
 });
@@ -82,3 +77,8 @@ module.exports.getPatientsByIds = function(patient_list,callback){
 module.exports.addPatient = function(newPatient, callback){
   newPatient.save(callback);
 };
+
+module.exports.updatePatient = function(patient, callback) {
+
+  Patient.update({_id:patient._id}, patient, callback);
+}

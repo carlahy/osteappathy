@@ -1,9 +1,0 @@
-<div class="form-group form-inline" *ngFor="let r of patientService.treatment_resource">
-  <label class="control-label col-sm-4">{{r.key}}</label>
-  <input type="text" *ngIf="r.type == 1 " [(ngModel)]="patientService.new_patient[r.key]" name="{{r.key}}" class="form-control focusedInput">
-  <input type="date" *ngIf="r.type == 2" [(ngModel)]="patientService.new_patient[r.key]" name="{{r.key}}" class="form-control"/>
-  <input type="number" *ngIf="r.type == 3" [(ngModel)]="patientService.new_patient[r.key]" name="{{r.key}}" class="form-control"/>
-  <select class="form-control" *ngIf="r.type == 0" [(ngModel)]="patientService.new_patient[r.key]" name="{{r.key}}">
-    <option *ngFor="let v of r.values">{{v}}</option>
-  </select>
-</div>

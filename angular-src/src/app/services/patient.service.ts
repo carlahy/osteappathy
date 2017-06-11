@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { URLSearchParams, Http, Headers } from '@angular/http';
 import { AuthService } from '../services/auth.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Injectable()
 export class PatientService {
 
   constructor(
+    private flashMessage:FlashMessagesService,
     private http:Http,
     private authService:AuthService,
   ) {
@@ -47,7 +49,7 @@ export class PatientService {
 
   new_patient:any;
   new_treatment:any;
-  selected_patient: Object;
+  selected_patient:any;
 
   ongoing_patients = [];
   discharged_patients = [];
@@ -57,7 +59,7 @@ export class PatientService {
   isDev:boolean;
 
   getPatients(){
-
+    var success;
     this.authService.getPatientList().subscribe(data => {
       if(data.success) {
         let headers = new Headers();
@@ -76,28 +78,29 @@ export class PatientService {
               this.ongoing_patients = [];
               this.discharged_patients = [];
               for (var p in data.patients) {
-                if (data.patients[p].discharged == "False") {
+                if (data.patients[p].discharged == false) {
                   this.ongoing_patients.push(data.patients[p]);
                 } else {
                   this.discharged_patients.push(data.patients[p]);
                 }
               }
-              return true;
             } else {
-              return false;
+              // this.flashMessage.show('Something went wrong, patients could not be loaded', {cssClass: 'alert-danger', timeout:3000});
+              console.log('Something went wrong, patients could not be loaded');
             }
           });
 
       } else {
         console.log('Something went wrong, patients could not be loaded');
-        return false;
       }
     });
+    return success;
   }
 
   validatePatient(){
     for(var r in this.patient_resource) {
-      if(this.new_patient[r] == undefined) {
+      var key = this.patient_resource[r].key;
+      if(this.new_patient[key] == undefined) {
         return false;
       } else {
         return true;
@@ -110,6 +113,23 @@ export class PatientService {
     headers.append('Content-Type','application/json');
     let ep = this.prepEndpoint('patients/create');
     return this.http.post(ep, patient, {headers:headers})
+      .map(res => res.json());
+  }
+
+  updatePatient(patient){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    let ep = this.prepEndpoint('patients/update');
+    return this.http.post(ep, {patient:patient}, {headers:headers})
+      .map(res => res.json());
+  }
+
+  addPatientToUser(patient_id){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    let ep = this.prepEndpoint('users/newpatient');
+    let user_id = this.authService.getUserId();
+    return this.http.post(ep, {user_id:user_id,patient_id:patient_id}, {headers:headers})
       .map(res => res.json());
   }
 
@@ -132,13 +152,13 @@ export class PatientService {
   }
 
   getNewPatient() {
-    const dob = this.parseDate(this.new_patient.DOB);
+    const dob = this.parseDate(this.new_patient.dob);
     const ageDate = new Date(Date.now() - dob.getTime());
     const age =  Math.abs(ageDate.getUTCFullYear() - 1970);
 
-    this.new_patient.Age = age;
-    this.new_patient.Treatments = [this.new_treatment];
-    // TODO: discharged
+    this.new_patient.age = age;
+    this.new_patient.treatments = [this.new_treatment];
+    this.new_patient.discharged = false;
     return this.new_patient;
   }
 

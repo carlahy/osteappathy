@@ -11,6 +11,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 export class PatientEditComponent implements OnInit {
 
   selected_patient: any;
+  new_treatment = {};
 
   constructor(
     private flashMessage:FlashMessagesService,
@@ -34,9 +35,8 @@ export class PatientEditComponent implements OnInit {
     }
   }
 
-  onSavePatient() {
-    console.log('Saving patient ', this.selected_patient);
-    this.patientService.createPatient(this.selected_patient).subscribe(data => {
+  updatePatient() {
+    this.patientService.updatePatient(this.selected_patient).subscribe(data => {
       if(data.success) {
         this.flashMessage.show('Saved patient details', {cssClass: 'alert-success', timeout:3000});
         this.patientService.getPatients();
@@ -48,7 +48,16 @@ export class PatientEditComponent implements OnInit {
   }
 
   addTreatment() {
-
+    this.selected_patient.treatments.push(this.new_treatment);
+    this.patientService.updatePatient(this.selected_patient).subscribe(data => {
+      if(data.success) {
+        this.flashMessage.show('Added new treatment', {cssClass: 'alert-success', timeout:3000});
+        this.patientService.getPatients();
+        this.new_treatment = {};
+      } else {
+        this.flashMessage.show('Something went wrong, treatment could not be added', {cssClass: 'alert-danger', timeout:3000});
+      }
+    })
   }
 
   discharge(){

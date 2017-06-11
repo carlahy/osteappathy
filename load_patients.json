@@ -1,4 +1,3 @@
-{patient_num: 983741, sex:"Female", dob: "1996-08-30", age:21, ethnicity:"White", occupation: "Student", site_of_complaint: "Lumbar Spine",stage: "Acute", suitable_for_osteopathy:"Yes", treatments:[{date:
+{patient_num: 983741, sex:"Female", dob: "1996-08-30", age:21, ethnicity:"White", occupation: "Student", site_of_complaint: "Lumbar Spine",stage: "Acute", suitable_for_osteopathy:"Yes", treatments:[{treatment_date:
 "2017-05-30", treatment_used:"Functional Techniques",vas:7, qal:4 }], discharged:"False"}
-{patient_num: 134098, sex:"Male", dob: "1971-06-09", age:46, ethnicity:"White", occupation: "Full Time Employed", site_of_complaint: "Cervical Spine",stage: "Acute", suitable_for_osteopathy:"Yes", treatments:[{date:
-"2017-05-18", treatment_used:"Functional Techniques",vas:5, qal:5 }], discharged:"True"}
+{patient_num: 134098, sex:"Male", dob: "1971-06-09", age:46, ethnicity:"White", occupation: "Full Time Employed", site_of_complaint: "Cervical Spine",stage: "Acute", suitable_for_osteopathy:"Yes", treatments:[{treatment_date: "2017-05-18", treatment_used:"Functional Techniques",vas:5, qal:6 }], discharged:"True"}

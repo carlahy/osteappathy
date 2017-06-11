@@ -1,5 +1,5 @@
 <div class="modal fade" id="editPatient" role="dialog" *ngIf="getSelectedPatient()">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
   <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -7,100 +7,72 @@
       </div>
       <flash-messages></flash-messages>
       <div class="modal-body">
-        <!-- Patient Form to Edit -->
-        <form (submit)="updatePatient()" class="form-horizontal" autocomplete="off">
-          <div class="form-group form-inline" *ngFor="let r of patientService.patient_resource">
-            <label class="control-label col-sm-4">{{r.key}}</label>
-            <input type="text" *ngIf="r.type == 1 " [(ngModel)]="patientService.new_patient[r.key]" name="{{r.key}}" class="form-control focusedInput">
-            <input type="date" *ngIf="r.type == 2" [(ngModel)]="patientService.new_patient[r.key]" name="{{r.key}}" class="form-control"/>
-            <input type="number" *ngIf="r.type == 3" [(ngModel)]="patientService.new_patient[r.key]" name="{{r.key}}" class="form-control"/>
-            <select class="form-control" *ngIf="r.type == 0" [(ngModel)]="patientService.new_patient[r.key]" name="{{r.key}}">
-              <option *ngFor="let v of r.values">{{v}}</option>
-            </select>
+
+        <div class="row">
+          <div class="col-sm-8 col-push-2">
+            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#viewPatient">View Patient</button>
+            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#viewTreatments">View Treatments</button>
+          </div>
+        </div>
+
+        <!-- View Patient -->
+          <div class="collapse" id="viewPatient">
+            <form (submit)="updatePatient()" class="form-horizontal" autocomplete="off">
+              <div class="form-group form-inline" *ngFor="let r of patientService.patient_resource">
+                <label class="control-label col-sm-4">{{r.name}}</label>
+                <input type="text" *ngIf="r.type == 1 " [(ngModel)]="selected_patient[r.key]" name="{{r.key}}" class="form-control">
+                <input type="date" *ngIf="r.type == 2" [(ngModel)]="selected_patient[r.key]" name="{{r.key}}" class="form-control"/>
+                <input type="number" *ngIf="r.type == 3" [(ngModel)]="selected_patient[r.key]" name="{{r.key}}" class="form-control"/>
+                <select class="form-control" *ngIf="r.type == 0" [(ngModel)]="selected_patient[r.key]" name="{{r.key}}">
+                  <option *ngFor="let v of r.values">{{v}}</option>
+                </select>
+              </div>
+              <input type="submit" class="btn btn-primary" value="Submit">
+            </form>
           </div>
 
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-4">Patient Number</label>
-            <input type="text" [(ngModel)]="selected_patient.patient_num" name="patient_num" class="form-control focusedInput">
-          </div>
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-4">Sex</label>
-            <select class="form-control" [(ngModel)]="selected_patient.sex" name="sex">
-              <option>Male</option>
-              <option>Female</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-4">DOB</label>
-            <input type="date" [(ngModel)]="selected_patient.dob" name="dob" class="form-control"/>
-          </div>
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-4">Occupation</label>
-            <select class="form-control" [(ngModel)]="selected_patient.occupation" name="occupation">
-              <option>Office worker</option>
-              <option>Teacher</option>
-              <option>Retired</option>
-            </select>
-          </div>
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-4">Body part</label>
-            <select class="form-control" [(ngModel)]="selected_patient.body_part" name="body_part">
-              <option>Lower back</option>
-              <option>Neck</option>
-              <option>Shoulder</option>
-              <option>Ankle</option>
-            </select>
-          </div>
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-4">Injury detail</label>
-            <select class="form-control" [(ngModel)]="selected_patient.injury_detail" name="injury_detail">
-              <option>Facet Joint Irritation</option>
-              <option>Lumbar Disc Prolapse</option>
-              <option>Thoracic Outlet Syndrome</option>
-              <option>Supraspinatus Tendinopathy</option>
-              <option>Sprained Ligament</option>
-            </select>
-          </div>
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-4">Stage</label>
-            <select class="form-control" [(ngModel)]="selected_patient.stage" name="stage">
-              <option>Acute</option>
-              <option>Chronic</option>
-            </select>
+        <!-- View Treatments -->
+          <div class="collapse" id="viewTreatments">
+
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th *ngFor="let t of this.patientService.treatment_resource">{{t.name}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let t of selected_patient.treatments">
+                  <td>{{t.treatment_date}}</td>
+                  <td>{{t.treatment_used}}</td>
+                  <td>{{t.vas}}</td>
+                  <td>{{t.qal}}</td>
+                </tr>
+                <!-- Add Treatment -->
+                <tr>
+                  <td *ngFor="let t of this.patientService.treatment_resource">
+                    <input type="text" *ngIf="t.type == 1 " [(ngModel)]="new_treatment[t.key]" name="{{t.key}}" class="form-control focusedInput">
+                    <input type="date" *ngIf="t.type == 2" [(ngModel)]="new_treatment[t.key]" name="{{t.key}}" class="form-control"/>
+                    <input type="number" *ngIf="t.type == 3" [(ngModel)]="new_treatment[t.key]" name="{{t.key}}" class="form-control"/>
+                    <select class="form-control" *ngIf="t.type == 0" [(ngModel)]="new_treatment[t.key]" name="{{t.key}}">
+                      <option *ngFor="let v of t.values">{{v}}</option>
+                    </select>
+                  </td>
+                  <td><button type="button" name="button" class="btn btn-default" (click)="addTreatment()">Add</button></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <form id="addTreatment" (submit)="addTreatment()" method="post">
+              <div class="form-group form-inline" *ngFor="let r of patientService.treatment_resource">
+
+
+              </div>
+              <input type="submit" class="btn btn-primary" value="Submit">
+            </form>
+
+            <button type="button" class="btn btn-danger" data-toggle="collapse" data-target="">Discharge</button>
           </div>
 
-<!-- TREATMENTS -->
-          <!-- Show Treatments -->
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-4">See treatments</label>
-            <!-- <button type="button" class="btn btn-info control-label col-sm-4" data-toggle="collapse" data-target="#showTreatments">See treatment(s)</button> -->
-          </div>
-          <!-- <app-treatment id="showTreatments"></app-treatment> -->
-
-          <!-- New Treatment -->
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-4">Add treatment</label>
-            <!-- <button type="button" class="btn" aria-label="Add" data-toggle="collapse" data-target="#addTreatment">
-              <span class="glyphicon glyphicon-align-plus" aria-hidden="true"></span>
-            </button> -->
-          </div>
-          <!-- <app-treatment class="" id="addTreatment"></app-treatment> -->
-
-          <!-- Last Treatment -->
-          <div class="form-group form-inline">
-            <label class="control-label col-sm-4">Discharge</label>
-            <!-- <button type="button" class="btn btn-warning col-sm-4" data-toggle="collapse" data-target="">Discharge</button>
-            <input type="checkbox" [(ngModel)]="selected_patient.discharged" name="consult_date"  class="form-control"/> -->
-          </div>
-          <!-- <div class="form-group form-inline">
-            <button type="button" class="btn btn-warning col-sm-4" data-toggle="collapse" data-target="">Stopped attending</button>
-            <input type="checkbox" [(ngModel)]="selected_patient.stopped_attending" name="consult_date"  class="form-control"/>
-          </div> -->
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onSavePatient()">Save</button>
       </div>
     </div>
   </div>

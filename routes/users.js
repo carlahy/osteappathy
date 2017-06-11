@@ -73,4 +73,15 @@ router.get('/patients', (req, res, next) => {
   })
 });
 
+// Push new patient to list
+router.post('/newpatient', (req, res, next) => {
+  User.pushNewPatient(req.body.user_id,req.body.patient_id, (err, user) => {
+    if (err) throw err;
+    if (!user) {
+      return res.json({success:false,msg:'User not found, could not add new patient'});
+    }
+    return res.json({success:true});
+  });
+});
+
 module.exports = router;

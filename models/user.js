@@ -28,6 +28,10 @@ const UserSchema = mongoose.Schema({
 
 const User = module.exports = mongoose.model('User', UserSchema);
 
+module.exports.pushNewPatient = function(user_id, patient_id, callback) {
+  User.update({_id:user_id}, {$push: {patients:patient_id}}, callback);
+}
+
 module.exports.getUserById = function(id, callback){
   User.findById(id, callback);
 };

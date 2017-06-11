@@ -19,7 +19,6 @@ import { UserService } from './services/user.service';
 import { AuthGuard } from './guards/auth.guard';
 import { PatientService } from './services/patient.service';
 import { PatientEditComponent } from './components/patient-edit/patient-edit.component';
-import { TreatmentComponent } from './components/treatment/treatment.component';
 import { PatientCreateComponent } from './components/patient-create/patient-create.component';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
@@ -44,7 +43,6 @@ const appRoutes: Routes = [
     DashboardComponent,
     ProfileComponent,
     PatientEditComponent,
-    TreatmentComponent,
     PatientCreateComponent,
     BarChartComponent
   ],

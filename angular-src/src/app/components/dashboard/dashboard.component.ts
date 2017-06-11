@@ -28,13 +28,7 @@ export class DashboardComponent implements OnInit {
 
   getPatients(){
     let patient_list = this.authService.getPatientList();
-    let res = this.patientService.getPatients();
-    console.log(res);
-    if(!res) {
-      this.flashMessage.show('Something went wrong, patients could not be loaded', {cssClass: 'alert-danger', timeout:3000});
-    } else {
-      console.log('Successsss!');
-    }
+    this.patientService.getPatients();
   }
 
   hasOngoingPatients() {

@@ -30,8 +30,8 @@ router.post('/create', (req, res, next) => {
       }
     } else {
       // Add new patient ID to user patient list
-      console.log('Created patient ', patient);
-      res.json({success:true, msg:'New patient was created'});
+
+      res.json({success:true, patient_id: patient._id, msg:'New patient was created'});
     }
   });
 });
@@ -64,6 +64,12 @@ router.get('/all', (req,res,next) => {
 });
 
 // Update patient
+router.post('/update', (req,res,next) => {
+  Patient.updatePatient(req.body.patient, (err,patient) => {
+    if(err) throw err;
+    return res.json({success:true,msg:'Updated patient information'});
+  });
+});
 
 
 // Delete patient

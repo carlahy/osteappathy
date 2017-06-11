@@ -24,8 +24,7 @@ export class PatientCreateComponent implements OnInit {
   }
 
   createPatient() {
-
-    // Required fields
+    // Required fields TODO un comment
     if(!this.patientService.validatePatient()) {
       this.flashMessage.show('Please fill in required fields', {cssClass: 'alert-danger', timeout:3000});
       return false;
@@ -37,7 +36,14 @@ export class PatientCreateComponent implements OnInit {
     this.patientService.createPatient(newPatient).subscribe(data => {
       if(data.success) {
         this.flashMessage.show(data.msg, {cssClass: 'alert-success', timeout:3000});
-        this.patientService.getPatients();
+        this.patientService.addPatientToUser(data.patient_id).subscribe(data => {
+          if(data.success) {
+            this.patientService.getPatients();
+          } else {
+            this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout:3000});
+          }
+        });
+
       } else {
         this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout:3000});
       }
