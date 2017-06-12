@@ -23,7 +23,7 @@ export class BarChartComponent implements OnInit {
 
   barChartOptions:any = {
     scaleShowVerticalLines: false,
-    responsive: true
+    responsive: false
   };
 
   barChartLegend:boolean = true;
@@ -40,53 +40,53 @@ export class BarChartComponent implements OnInit {
   discharged_patients$: Observable<any[]>;
 
   graph_attributes = [
-    {
-      key:'age',
-      name:'Age',
-      for:'patient',
-      chart_type:'bar'
-    },
+    // TODO: create age ranges {
+      // key:'age',
+      // name:'Age',
+      // for:'patient',
+      // chart_type:'bar'
+    // },
     {
       key:'sex',
       name:'Sex',
       for:'patient',
-      chart_type:'bar'
+      chart_type:'pie'
     },
     {
       key:'site_of_complaint',
       name:'Site of Complaint',
       for:'patient',
-      chart_type:'bar'
+      chart_type:'pie'
     },
     {
       key:'treatment_used',
       name:'Treatment Used',
       for:'treatment',
-      chart_type:'bar'
+      chart_type:'pie'
     },
     {
         key:'vas_before',
         name:'VAS Before',
-        for:'treatment',
-        chart_type:'bar'
+        for:'discharged',
+        chart_type:'pie'
     },
     {
       key:'vas_after',
       name:'VAS After',
-      for:'treatment',
-      chart_type:'bar'
+      for:'discharged',
+      chart_type:'pie'
     },
     {
       key:'qal_before',
       name:'QAL Before',
-      for:'treatment',
-      chart_type:'bar'
+      for:'discharged',
+      chart_type:'pie'
     },
     {
       key:'qal_after',
       name:'QAL After',
-      for:'treatment',
-      chart_type:'bar'
+      for:'discharged',
+      chart_type:'pie'
     }
   ];
 
@@ -101,26 +101,29 @@ export class BarChartComponent implements OnInit {
     this.discharged_patients$ = this.patientService.subscribeToDataService(3);
     this.discharged_patients$.subscribe(patients => {
       this.discharged_patients = patients;
-      // For all graph attributes
-
 
       let patient_attr = this.graph_attributes.filter(attr => attr.for == 'patient');
       let treatment_attr = this.graph_attributes.filter(attr => attr.for == 'treatment');
       this.graphs = [];
-      console.log('Patient attributes ', patient_attr);
+
       for(var a in patient_attr) {
         let key = patient_attr[a].key;
         let name = patient_attr[a].name;
 
-        let filtered_data = patients.map(p => p[key]);
-        // TODO: find unique values
-        let unique_fields = patients.filter(p => p);
+        let arr = patients.map(p => p[key]);
+
+        let unique_labels = Array.from(new Set(arr));
+
+        let filtered_data = [];
+        unique_labels.forEach(label => {
+          filtered_data.push(arr.filter(a => a == label).length);
+        });
 
         let graph = {
           barChartData:[
             {data: filtered_data, label: 'Discharged Patient ' + name}
           ],
-          barChartLabels: unique_fields,
+          barChartLabels: unique_labels,
           barChartOptions: this.barChartOptions,
           barChartLegend: this.barChartLegend,
           barChartType: patient_attr[a].chart_type,
@@ -131,12 +134,42 @@ export class BarChartComponent implements OnInit {
         this.graphs.push(graph);
       }
 
-      console.log('Graphs : ',this.graphs);
-
       // Repeat for treatment_attr
       for(var a in treatment_attr) {
+        let key = treatment_attr[a].key;
+        let name = treatment_attr[a].name;
 
+        let arr = [];
+        patients.map(p => p.treatments.map(t => t[key]).forEach(t => {
+          arr.push(t);
+        }));
+
+        let unique_labels = Array.from(new Set(arr));
+
+        let filtered_data = [];
+        unique_labels.forEach(label => {
+          filtered_data.push(arr.filter(a => a == label).length);
+        });
+
+        let graph = {
+          barChartData:[
+            {data: filtered_data, label: 'Discharged Patient ' + name}
+          ],
+          barChartLabels: unique_labels,
+          barChartOptions: this.barChartOptions,
+          barChartLegend: this.barChartLegend,
+          barChartType: treatment_attr[a].chart_type,
+          chartHovered:this.chartHovered,
+          chartClicked: this.chartClicked
+        };
+
+        this.graphs.push(graph);
       }
+
+
+      // TODO: vas and qal charts
+      
+
 
       // Filter: Returns an array of patients that match the test
       // var females = patients.filter(patients => patients.age <  40);
@@ -145,22 +178,9 @@ export class BarChartComponent implements OnInit {
       // Map: Returns an array with only the required attribute from an object
       // var onlyage = patients.map(p => p.age);
       // console.log('Only age ',onlyage);
+
     });
 
-    // this.graphs = [
-    //   {
-    //     barChartData:[
-    //       {data: [1,2,3,4,5,6], label: 'Ongoing Patient Site of Complaint'},
-    //       {data: [2,4,6,8,10,12], label: 'Discharged Patients Site of Complaint'}
-    //     ],
-    //     barChartLabels: [ "Cervical Spine", "Thoracic Spine", "Lumbar Spine", "Sacro-iliac Joint", "Upper Extremity", "Lower Extremity" ],
-    //     barChartOptions: this.barChartOptions,
-    //     barChartLegend: this.barChartLegend,
-    //     barChartType: this.barChartType,
-    //     chartHovered:this.chartHovered,
-    //     chartClicked: this.chartClicked
-    //   }
-    // ]
   }
 
   public chartClicked(e:any):void {

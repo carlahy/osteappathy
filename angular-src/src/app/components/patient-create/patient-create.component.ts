@@ -25,7 +25,12 @@ export class PatientCreateComponent implements OnInit {
 
   createPatient() {
     if(!this.patientService.validatePatient()) {
-      this.flashMessage.show('Please fill in required fields', {cssClass: 'alert-danger', timeout:3000});
+      this.flashMessage.show('Please fill in required patient fields', {cssClass: 'alert-danger', timeout:3000});
+      return false;
+    }
+
+    if(!this.patientService.validateTreatment()){
+      this.flashMessage.show('Please fill in required treatment fields', {cssClass: 'alert-danger', timeout:3000});
       return false;
     }
 

@@ -149,9 +149,25 @@ export class PatientService {
     });
   }
 
+  getAllPatients() {
+    // TODO: get all patients in patient collection
+  }
+
   validatePatient(){
     for(var r in this.patient_resource) {
       var key = this.patient_resource[r].key;
+      if(this.new_patient[key] == undefined) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+
+  // TODO: call this function
+  validateTreatment(){
+    for(var r in this.treatment_resource) {
+      var key = this.treatment_resource[r].key;
       if(this.new_patient[key] == undefined) {
         return false;
       } else {
