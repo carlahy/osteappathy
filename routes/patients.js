@@ -27,7 +27,7 @@ router.post('/create', (req, res, next) => {
         res.json({success:false, msg:'Patient could not be created: patient number is already in use'});
       } else {
         console.log(err);
-        res.json({success:false, msg:'Something went wrong, patient could not be created', err:err});
+        res.json({success:false, msg:'Something went wrong, patient could not be created ' + err, err:err});
       }
     } else {
       // Add new patient ID to user patient list
