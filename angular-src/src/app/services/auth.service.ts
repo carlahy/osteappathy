@@ -42,20 +42,6 @@ export class AuthService {
       .map(res => res.json());
   }
 
-  getPatientList(){
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
-    let ep = this.prepEndpoint('users/patients');
-    let params = new URLSearchParams();
-    params.set('user_id', this.getUserId());
-
-    return this.http.get(ep, {
-      search: params,
-      headers:headers
-    })
-      .map(res => res.json());
-  }
-
   getUserId() {
     let user = JSON.parse(localStorage.getItem('user'));
     return user.id;

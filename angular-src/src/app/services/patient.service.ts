@@ -1,100 +1,152 @@
 import { Injectable } from '@angular/core';
 import { URLSearchParams, Http, Headers } from '@angular/http';
 import { AuthService } from '../services/auth.service';
-import { FlashMessagesService } from 'angular2-flash-messages';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import 'rxjs/add/operator/map';
+
 
 @Injectable()
 export class PatientService {
 
-  constructor(
-    private flashMessage:FlashMessagesService,
-    private http:Http,
-    private authService:AuthService,
-  ) {
-      this.authService = authService;
-      // Set user id for this session
-      this.user_id = this.authService.getUserId();
-      this.isDev = false;
-      this.new_patient = {};
-      this.new_treatment = {};
-      let headers = new Headers();
-      headers.append('Content-Type','application/json');
-      let ep = this.prepEndpoint('resources/');
-      this.http.get(ep, {headers:headers})
-        .map(res => res.json())
-        .subscribe(data => {
-          if(data.success) {
-            this.patient_resource = [];
-            this.treatment_resource = [];
+  patients: any[] = [];
+  ongoing_patients: any[] = [];
+  discharged_patients: any[] = [];
 
-            for (var r in data.resources) {
-              if (data.resources[r].for == "Patient") {
-                this.patient_resource.push(data.resources[r]);
-                this.new_patient[data.resources[r].key] = undefined;
-              } else {
-                this.treatment_resource.push(data.resources[r]);
-                this.new_treatment[data.resources[r].key] = undefined;
-              }
-            }
-          } else {
-              console.log('Something went wrong, patients could not be loaded');
-            }
-        });
-  }
+  patients$: BehaviorSubject<any[]>;
+  ongoing_patients$: BehaviorSubject<any[]>;
+  discharged_patients$: BehaviorSubject<any[]>;
 
-  // Properties
+  patient_list:any;
 
-  patient_resource:any[];
-  treatment_resource:any[];
+  patient_resource: any[];
+  treatment_resource: any[];
+
+  patient_resource$: BehaviorSubject<any[]>;
+  treatment_resource$: BehaviorSubject<any[]>;
 
   new_patient:any;
   new_treatment:any;
   selected_patient:any;
 
-  ongoing_patients = [];
-  discharged_patients = [];
-
   user_id:String;
 
   isDev:boolean;
 
-  getPatients(){
-    var success;
-    this.authService.getPatientList().subscribe(data => {
-      if(data.success) {
-        let headers = new Headers();
-        headers.append('Content-Type','application/json');
-        let ep = this.prepEndpoint('patients/user');
-        let params = new URLSearchParams();
-        params.set('patient_list', data.patient_list);
+  constructor(
+    private http:Http,
+    private authService:AuthService,
+  ) {
+      this.user_id = this.authService.getUserId();
 
-        this.http.get(ep, {
-          search: params,
-          headers:headers
-        })
-          .map(res => res.json())
-          .subscribe(data => {
-            if(data.success) {
-              this.ongoing_patients = [];
-              this.discharged_patients = [];
-              for (var p in data.patients) {
-                if (data.patients[p].discharged == false) {
-                  this.ongoing_patients.push(data.patients[p]);
-                } else {
-                  this.discharged_patients.push(data.patients[p]);
-                }
-              }
+      this.isDev = false;
+
+      this.new_patient = {};
+      this.new_treatment = {};
+
+      this.patients$ = <BehaviorSubject<any[]>> new BehaviorSubject([]);
+      this.ongoing_patients$ = <BehaviorSubject<any[]>> new BehaviorSubject([]);
+      this.discharged_patients$ = <BehaviorSubject<any[]>> new BehaviorSubject([]);
+
+      this.patient_resource$ = <BehaviorSubject<any[]>> new BehaviorSubject([])
+        .asObservable();
+      this.treatment_resource$ = <BehaviorSubject<any[]>> new BehaviorSubject([])
+          .asObservable();
+
+      this.getResources().subscribe(data => {
+        if(data.success) {
+          this.patient_resource = [];
+          this.treatment_resource = [];
+
+          for (var r in data.resources) {
+            if (data.resources[r].for == "Patient") {
+              this.patient_resource.push(data.resources[r]);
+              this.new_patient[data.resources[r].key] = undefined;
             } else {
-              // this.flashMessage.show('Something went wrong, patients could not be loaded', {cssClass: 'alert-danger', timeout:3000});
-              console.log('Something went wrong, patients could not be loaded');
+              this.treatment_resource.push(data.resources[r]);
+              this.new_treatment[data.resources[r].key] = undefined;
             }
-          });
+          }
+        } else {
+            console.log('Something went wrong, patients could not be loaded');
+          }
+      });
 
-      } else {
-        console.log('Something went wrong, patients could not be loaded');
-      }
+      this.loadPatients();
+
+  }
+
+  subscribeToDataService(d) {
+    switch(d) {
+      case 1: return this.patients$.asObservable();
+      case 2: return this.ongoing_patients$.asObservable();
+      case 3: return this.discharged_patients$.asObservable();
+      default: break;
+    }
+    return;
+  }
+
+  getResources() {
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    let ep = this.prepEndpoint('resources/');
+    return this.http.get(ep, {headers:headers})
+      .map(res => res.json());
+  }
+
+  loadPatients(){
+    this.getPatientList().subscribe(data => {
+      this.patient_list = data.patient_list;
+      this.getPatients();
     });
-    return success;
+  }
+
+  getPatientList(){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    let ep = this.prepEndpoint('users/patients');
+    let params = new URLSearchParams();
+    params.set('user_id', this.authService.getUserId());
+
+    return this.http.get(ep, {
+      search: params,
+      headers:headers
+    })
+      .map(res => res.json());
+  }
+
+  getPatients(){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    let ep = this.prepEndpoint('patients/user');
+    let params = new URLSearchParams();
+    params.set('patient_list', this.patient_list);
+
+    this.http.get(ep, {
+      search: params,
+      headers:headers
+    })
+    .map(res => res.json())
+    .subscribe(data => {
+      this.patients = data.patients;
+      this.ongoing_patients = [];
+      this.discharged_patients = [];
+
+      for (var p in data.patients) {
+        if (data.patients[p].discharged == false) {
+          this.ongoing_patients.push(data.patients[p]);
+        } else {
+          this.discharged_patients.push(data.patients[p]);
+        }
+      }
+
+      // Push new copy of patient to all Subscribers
+      this.patients$.next(this.patients);
+      this.ongoing_patients$.next(this.ongoing_patients);
+      this.discharged_patients$.next(this.discharged_patients);
+    }, err => {
+      console.log('Something went wrong, patients could not be loaded');
+    });
   }
 
   validatePatient(){

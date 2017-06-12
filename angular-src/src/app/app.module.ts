@@ -54,7 +54,12 @@ const appRoutes: Routes = [
     FlashMessagesModule,
     ChartsModule
   ],
-  providers: [UserService, ValidateService, AuthService, AuthGuard, PatientService],
+  providers: [
+    UserService,
+    ValidateService,
+    AuthService,
+    AuthGuard,
+    PatientService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

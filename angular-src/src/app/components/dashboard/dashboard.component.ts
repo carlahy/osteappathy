@@ -22,13 +22,9 @@ export class DashboardComponent implements OnInit {
     this.authService = authService;
   }
 
-  ngOnInit() {
-    this.getPatients();
-  }
 
-  getPatients(){
-    let patient_list = this.authService.getPatientList();
-    this.patientService.getPatients();
+  ngOnInit() {
+
   }
 
   hasOngoingPatients() {
