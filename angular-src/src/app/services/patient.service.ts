@@ -39,7 +39,7 @@ export class PatientService {
   ) {
       this.user_id = this.authService.getUserId();
 
-      this.isDev = true;
+      this.isDev = this.authService.isDev;
 
       this.new_patient = {};
       this.new_treatment = {};

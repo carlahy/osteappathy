@@ -7,13 +7,11 @@ import { tokenNotExpired } from 'angular2-jwt';
 export class AuthService {
   authToken: any;
   user: any;
-  isDev: boolean;
+  isDev: boolean = true;
 
   constructor(
     private http:Http
-  ) {
-      this.isDev = true;
-  }
+  ) {}
 
   registerUser(user){
     let headers = new Headers();
