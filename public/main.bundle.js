@@ -62,7 +62,7 @@ var PatientService = (function () {
                 }
             }
             else {
-                console.log('Something went wrong, patients could not be loaded');
+                console.log('Something went wrong, resources could not be loaded');
             }
         });
         this.loadPatients();
@@ -87,7 +87,12 @@ var PatientService = (function () {
         var _this = this;
         this.getPatientList().subscribe(function (data) {
             _this.patient_list = data.patient_list;
-            _this.getPatients();
+            if (_this.patient_list.length == 0) {
+                console.log('No patients to load');
+            }
+            else {
+                _this.getPatients();
+            }
         });
     };
     PatientService.prototype.getPatientList = function () {
@@ -131,7 +136,7 @@ var PatientService = (function () {
             _this.ongoing_patients$.next(_this.ongoing_patients);
             _this.discharged_patients$.next(_this.discharged_patients);
         }, function (err) {
-            console.log('Something went wrong, patients could not be loaded');
+            console.log('Something went wrong, patients could not be loaded; in patient service, getPatients()');
         });
     };
     PatientService.prototype.getAllPatients = function () {
@@ -260,6 +265,14 @@ var DashboardComponent = (function () {
         this.authService = authService;
     }
     DashboardComponent.prototype.ngOnInit = function () {
+    };
+    DashboardComponent.prototype.hasPatients = function () {
+        if (this.patientService.patients.length > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     };
     DashboardComponent.prototype.hasOngoingPatients = function () {
         if (this.patientService.ongoing_patients.length > 0) {
@@ -1395,7 +1408,7 @@ module.exports = "<div class=\"row\">\n  <div class=\"col-sm-6\" *ngFor=\"let g 
 /***/ 695:
 /***/ (function(module, exports) {
 
-module.exports = "<h2 class=\"page-header\">Dashboard</h2>\n<p>Welcome to your dashboard: add new patients, edit current patients, and generate reports.</p>\n\n<div class=\"row top-buffer\">\n  <button type=\"button\" class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#newPatient\">Create new patient</button>\n  <!-- TODO: <button type=\"button\" class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#newPatient\">Generate Report</button> -->\n</div>\n\n<app-patient-create></app-patient-create>\n\n<div class=\"row top-buffer\">\n  <app-chart></app-chart>\n</div>\n\n<!-- Display Patients -->\n\n<div class=\"row top-buffer\">\n  <!-- Ongoing Patients -->\n  <div class=\"col-md-6\">\n    <h2>Ongoing Patients</h2>\n    <ul *ngIf=\"hasOngoingPatients()\" class=\"list-group\">\n      <a *ngFor=\"let patient of patientService.ongoing_patients\" (click)=\"patientService.setSelectedPatient(patient)\" class=\"list-group-item\" style=\"cursor: pointer\" data-toggle=\"modal\" data-target=\"#editPatient\">\n          <h4>Patient {{patient.patient_num}}</h4>\n          <span>{{patient.age}} year old {{patient.ethnicity}} {{patient.sex}}, {{patient.occupation}}</span>\n          <br>\n          <span><b>Complaint: {{patient.stage}} {{patient.site_of_complaint}}</b></span>\n      </a>\n    </ul>\n  </div>\n\n  <!-- Discharged Patients -->\n  <div class=\"col-md-6\">\n    <h2>Discharged Patients</h2>\n    <ul *ngIf=\"hasDischargedPatients()\" class=\"list-group\">\n      <a *ngFor=\"let patient of patientService.discharged_patients\"  class=\"list-group-item\" style=\"cursor: pointer\" data-toggle=\"modal\" data-target=\"#editPatient\" (click)=\"patientService.setSelectedPatient(patient)\">\n        <h4>Patient {{patient.patient_num}}</h4>\n        <span>{{patient.age}} year old {{patient.ethnicity}} {{patient.sex}}, {{patient.occupation}}</span>\n        <br>\n        <span><b>Complaint: {{patient.stage}} {{patient.site_of_complaint}}</b></span>\n      </a>\n    </ul>\n  </div>\n  <app-patient-edit></app-patient-edit>\n</div>\n"
+module.exports = "<h2 class=\"page-header\">Dashboard</h2>\n<p>Welcome to your dashboard: add new patients, edit current patients, and generate reports.</p>\n\n<div class=\"row top-buffer\">\n  <button type=\"button\" class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#newPatient\">Create new patient</button>\n  <!-- TODO: <button type=\"button\" class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#newPatient\">Generate Report</button> -->\n</div>\n\n<app-patient-create></app-patient-create>\n\n<div class=\"row top-buffer\">\n  <app-chart></app-chart>\n</div>\n\n<!-- Display Patients -->\n\n<div class=\"row top-buffer\" *ngIf=\"!hasPatients()\">\n  <div class=\"col-md-6\">\n    <h2>Create a patient to get started</h2>\n  </div>\n</div>\n\n<div class=\"row top-buffer\" *ngIf=\"hasPatients()\">\n  <!-- Ongoing Patients -->\n  <div class=\"col-md-6\">\n    <h2>Ongoing Patients</h2>\n    <ul *ngIf=\"hasOngoingPatients()\" class=\"list-group\">\n      <a *ngFor=\"let patient of patientService.ongoing_patients\" (click)=\"patientService.setSelectedPatient(patient)\" class=\"list-group-item\" style=\"cursor: pointer\" data-toggle=\"modal\" data-target=\"#editPatient\">\n          <h4>Patient {{patient.patient_num}}</h4>\n          <span>{{patient.age}} year old {{patient.ethnicity}} {{patient.sex}}, {{patient.occupation}}</span>\n          <br>\n          <span><b>Complaint: {{patient.stage}} {{patient.site_of_complaint}}</b></span>\n      </a>\n    </ul>\n  </div>\n\n  <!-- Discharged Patients -->\n  <div class=\"col-md-6\">\n    <h2>Discharged Patients</h2>\n    <ul *ngIf=\"hasDischargedPatients()\" class=\"list-group\">\n      <a *ngFor=\"let patient of patientService.discharged_patients\"  class=\"list-group-item\" style=\"cursor: pointer\" data-toggle=\"modal\" data-target=\"#editPatient\" (click)=\"patientService.setSelectedPatient(patient)\">\n        <h4>Patient {{patient.patient_num}}</h4>\n        <span>{{patient.age}} year old {{patient.ethnicity}} {{patient.sex}}, {{patient.occupation}}</span>\n        <br>\n        <span><b>Complaint: {{patient.stage}} {{patient.site_of_complaint}}</b></span>\n      </a>\n    </ul>\n  </div>\n  <app-patient-edit></app-patient-edit>\n</div>\n"
 
 /***/ }),
 

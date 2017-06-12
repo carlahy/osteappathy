@@ -27,6 +27,14 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  hasPatients() {
+    if (this.patientService.patients.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   hasOngoingPatients() {
     if (this.patientService.ongoing_patients.length > 0) {
       return true;

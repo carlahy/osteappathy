@@ -69,7 +69,7 @@ export class PatientService {
             }
           }
         } else {
-            console.log('Something went wrong, patients could not be loaded');
+            console.log('Something went wrong, resources could not be loaded');
           }
       });
 
@@ -97,7 +97,11 @@ export class PatientService {
   loadPatients(){
     this.getPatientList().subscribe(data => {
       this.patient_list = data.patient_list;
-      this.getPatients();
+      if (this.patient_list.length == 0) {
+        console.log('No patients to load');
+      } else {
+        this.getPatients();
+      }
     });
   }
 
@@ -145,7 +149,7 @@ export class PatientService {
       this.ongoing_patients$.next(this.ongoing_patients);
       this.discharged_patients$.next(this.discharged_patients);
     }, err => {
-      console.log('Something went wrong, patients could not be loaded');
+      console.log('Something went wrong, patients could not be loaded; in patient service, getPatients()');
     });
   }
 
