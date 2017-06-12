@@ -15,7 +15,6 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ValidateService } from './services/validate.service';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { AuthService } from './services/auth.service';
-import { UserService } from './services/user.service';
 import { AuthGuard } from './guards/auth.guard';
 import { PatientService } from './services/patient.service';
 import { PatientEditComponent } from './components/patient-edit/patient-edit.component';
@@ -55,7 +54,6 @@ const appRoutes: Routes = [
     ChartsModule
   ],
   providers: [
-    UserService,
     ValidateService,
     AuthService,
     AuthGuard,
