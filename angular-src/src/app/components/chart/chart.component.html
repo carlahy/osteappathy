@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-sm-6" *ngFor="let g of graphs">
     <canvas baseChart
-            [datasets]="g.barChartData"
-            [labels]="g.barChartLabels"
-            [options]="g.barChartOptions"
-            [legend]="g.barChartLegend"
-            [chartType]="g.barChartType"
+            [datasets]="g.chartData"
+            [labels]="g.chartLabels"
+            [options]="g.chartOptions"
+            [legend]="g.chartLegend"
+            [chartType]="g.chartType"
             (chartHover)="g.chartHovered($event)"
             (chartClick)="g.chartClicked($event)">
     </canvas>

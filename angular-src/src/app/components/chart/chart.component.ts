@@ -5,11 +5,11 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/filter';
 
 @Component({
-  selector: 'app-bar-chart',
-  templateUrl: './bar-chart.component.html',
-  styleUrls: ['./bar-chart.component.css']
+  selector: 'app-chart',
+  templateUrl: './chart.component.html',
+  styleUrls: ['./chart.component.css']
 })
-export class BarChartComponent implements OnInit {
+export class ChartComponent implements OnInit {
 
   constructor(
     private flashMessage:FlashMessagesService,
@@ -21,16 +21,16 @@ export class BarChartComponent implements OnInit {
 
   graphs:any[];
 
-  barChartOptions:any = {
+  chartOptions:any = {
     scaleShowVerticalLines: false,
-    responsive: false
+    responsive: true
   };
 
-  barChartLegend:boolean = true;
-  barChartType:string;
+  chartLegend:boolean = true;
+  chartType:string;
 
-  barChartData:any[];
-  barChartLabels:string[];
+  chartData:any[];
+  chartLabels:string[];
 
   patients: any[];
   discharged_patients: any[];
@@ -120,13 +120,13 @@ export class BarChartComponent implements OnInit {
         });
 
         let graph = {
-          barChartData:[
+          chartData:[
             {data: filtered_data, label: 'Discharged Patient ' + name}
           ],
-          barChartLabels: unique_labels,
-          barChartOptions: this.barChartOptions,
-          barChartLegend: this.barChartLegend,
-          barChartType: patient_attr[a].chart_type,
+          chartLabels: unique_labels,
+          chartOptions: this.chartOptions,
+          chartLegend: this.chartLegend,
+          chartType: patient_attr[a].chart_type,
           chartHovered:this.chartHovered,
           chartClicked: this.chartClicked
         };
@@ -152,13 +152,13 @@ export class BarChartComponent implements OnInit {
         });
 
         let graph = {
-          barChartData:[
+          chartData:[
             {data: filtered_data, label: 'Discharged Patient ' + name}
           ],
-          barChartLabels: unique_labels,
-          barChartOptions: this.barChartOptions,
-          barChartLegend: this.barChartLegend,
-          barChartType: treatment_attr[a].chart_type,
+          chartLabels: unique_labels,
+          chartOptions: this.chartOptions,
+          chartLegend: this.chartLegend,
+          chartType: treatment_attr[a].chart_type,
           chartHovered:this.chartHovered,
           chartClicked: this.chartClicked
         };
@@ -168,7 +168,7 @@ export class BarChartComponent implements OnInit {
 
 
       // TODO: vas and qal charts
-      
+
 
 
       // Filter: Returns an array of patients that match the test

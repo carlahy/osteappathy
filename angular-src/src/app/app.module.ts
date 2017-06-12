@@ -22,7 +22,7 @@ import { PatientEditComponent } from './components/patient-edit/patient-edit.com
 import { PatientCreateComponent } from './components/patient-create/patient-create.component';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { BarChartComponent } from './components/bar-chart/bar-chart.component';
+import { ChartComponent } from './components/chart/chart.component';
 
 
 const appRoutes: Routes = [
@@ -44,7 +44,7 @@ const appRoutes: Routes = [
     ProfileComponent,
     PatientEditComponent,
     PatientCreateComponent,
-    BarChartComponent
+    ChartComponent
   ],
   imports: [
     BrowserModule,
