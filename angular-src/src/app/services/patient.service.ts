@@ -53,6 +53,7 @@ export class PatientService {
       this.treatment_resource$ = <BehaviorSubject<any[]>> new BehaviorSubject([])
           .asObservable();
 
+      // Resources for patients and treatments - only needs to be loaded once
       this.getResources().subscribe(data => {
         if(data.success) {
           this.patient_resource = [];
@@ -73,7 +74,6 @@ export class PatientService {
       });
 
       this.loadPatients();
-
   }
 
   subscribeToDataService(d) {

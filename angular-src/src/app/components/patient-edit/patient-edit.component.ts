@@ -61,7 +61,15 @@ export class PatientEditComponent implements OnInit {
   }
 
   discharge(){
-
+    this.selected_patient.discharged = true;
+    this.patientService.updatePatient(this.selected_patient).subscribe(data => {
+      if(data.success) {
+        this.flashMessage.show('Patient has been discharged', {cssClass: 'alert-success', timeout:3000});
+        this.patientService.getPatients();
+      } else {
+        this.flashMessage.show('Something went wrong, patient could not be discharged', {cssClass: 'alert-danger', timeout:3000});
+      }
+    });
   }
 
   // Update patient

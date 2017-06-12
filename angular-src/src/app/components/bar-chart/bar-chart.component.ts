@@ -27,7 +27,7 @@ export class BarChartComponent implements OnInit {
   };
 
   barChartLegend:boolean = true;
-  barChartType:string = 'pie';
+  barChartType:string;
 
   barChartData:any[];
   barChartLabels:string[];
@@ -43,42 +43,50 @@ export class BarChartComponent implements OnInit {
     {
       key:'age',
       name:'Age',
-      for:'patient'
+      for:'patient',
+      chart_type:'bar'
     },
     {
       key:'sex',
       name:'Sex',
-      for:'patient'
+      for:'patient',
+      chart_type:'bar'
     },
     {
       key:'site_of_complaint',
       name:'Site of Complaint',
-      for:'patient'
+      for:'patient',
+      chart_type:'bar'
     },
     {
       key:'treatment_used',
       name:'Treatment Used',
-      for:'treatment'
+      for:'treatment',
+      chart_type:'bar'
     },
     {
         key:'vas_before',
         name:'VAS Before',
-        for:'treatment'
+        for:'treatment',
+        chart_type:'bar'
     },
     {
       key:'vas_after',
       name:'VAS After',
-      for:'treatment'
+      for:'treatment',
+      chart_type:'bar'
     },
     {
       key:'qal_before',
       name:'QAL Before',
-      for:'treatment'
+      for:'treatment',
+      chart_type:'bar'
     },
     {
       key:'qal_after',
       name:'QAL After',
-      for:'treatment'
+      for:'treatment',
+      chart_type:'bar'
     }
   ];
 
@@ -98,9 +106,9 @@ export class BarChartComponent implements OnInit {
 
       let patient_attr = this.graph_attributes.filter(attr => attr.for == 'patient');
       let treatment_attr = this.graph_attributes.filter(attr => attr.for == 'treatment');
-
+      this.graphs = [];
+      console.log('Patient attributes ', patient_attr);
       for(var a in patient_attr) {
-
         let key = patient_attr[a].key;
         let name = patient_attr[a].name;
 
@@ -115,13 +123,15 @@ export class BarChartComponent implements OnInit {
           barChartLabels: unique_fields,
           barChartOptions: this.barChartOptions,
           barChartLegend: this.barChartLegend,
-          barChartType: this.barChartType,
+          barChartType: patient_attr[a].chart_type,
           chartHovered:this.chartHovered,
           chartClicked: this.chartClicked
         };
 
         this.graphs.push(graph);
       }
+
+      console.log('Graphs : ',this.graphs);
 
       // Repeat for treatment_attr
       for(var a in treatment_attr) {
@@ -137,20 +147,20 @@ export class BarChartComponent implements OnInit {
       // console.log('Only age ',onlyage);
     });
 
-    this.graphs = [
-      {
-        barChartData:[
-          {data: [1,2,3,4,5,6], label: 'Ongoing Patient Site of Complaint'},
-          {data: [2,4,6,8,10,12], label: 'Discharged Patients Site of Complaint'}
-        ],
-        barChartLabels: [ "Cervical Spine", "Thoracic Spine", "Lumbar Spine", "Sacro-iliac Joint", "Upper Extremity", "Lower Extremity" ],
-        barChartOptions: this.barChartOptions,
-        barChartLegend: this.barChartLegend,
-        barChartType: this.barChartType,
-        chartHovered:this.chartHovered,
-        chartClicked: this.chartClicked
-      }
-    ]
+    // this.graphs = [
+    //   {
+    //     barChartData:[
+    //       {data: [1,2,3,4,5,6], label: 'Ongoing Patient Site of Complaint'},
+    //       {data: [2,4,6,8,10,12], label: 'Discharged Patients Site of Complaint'}
+    //     ],
+    //     barChartLabels: [ "Cervical Spine", "Thoracic Spine", "Lumbar Spine", "Sacro-iliac Joint", "Upper Extremity", "Lower Extremity" ],
+    //     barChartOptions: this.barChartOptions,
+    //     barChartLegend: this.barChartLegend,
+    //     barChartType: this.barChartType,
+    //     chartHovered:this.chartHovered,
+    //     chartClicked: this.chartClicked
+    //   }
+    // ]
   }
 
   public chartClicked(e:any):void {
@@ -162,8 +172,3 @@ export class BarChartComponent implements OnInit {
   }
 
 }
-//
-// interface Patient {
-//   _id: Number,
-//   sex: String
-// }
