@@ -165,10 +165,10 @@ export class PatientService {
   }
 
   // TODO: call this function
-  validateTreatment(){
+  validateTreatment(treatment){
     for(var r in this.treatment_resource) {
       var key = this.treatment_resource[r].key;
-      if(this.new_patient[key] == undefined) {
+      if(treatment[key] == undefined) {
         return false;
       } else {
         return true;

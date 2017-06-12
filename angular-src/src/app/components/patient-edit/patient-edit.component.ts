@@ -48,6 +48,11 @@ export class PatientEditComponent implements OnInit {
   }
 
   addTreatment() {
+    if(!this.patientService.validateTreatment(this.new_treatment)){
+      this.flashMessage.show('Please fill in required treatment fields', {cssClass: 'alert-danger', timeout:3000});
+      return false;
+    }
+
     this.selected_patient.treatments.push(this.new_treatment);
     this.patientService.updatePatient(this.selected_patient).subscribe(data => {
       if(data.success) {
