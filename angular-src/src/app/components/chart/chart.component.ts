@@ -21,11 +21,6 @@ export class ChartComponent implements OnInit {
 
   graphs:any[];
 
-  chartOptions:any = {
-    scaleShowVerticalLines: false,
-    responsive: true
-  };
-
   chartLegend:boolean = true;
   chartType:string;
 
@@ -124,11 +119,19 @@ export class ChartComponent implements OnInit {
             {data: filtered_data, label: 'Discharged Patient ' + name}
           ],
           chartLabels: unique_labels,
-          chartOptions: this.chartOptions,
+          chartOptions: {
+            scaleShowVerticalLines: false,
+            responsive: true,
+            title: {
+              display: true,
+              text: name
+            }
+          },
           chartLegend: this.chartLegend,
           chartType: patient_attr[a].chart_type,
           chartHovered:this.chartHovered,
           chartClicked: this.chartClicked
+
         };
 
         this.graphs.push(graph);
@@ -156,7 +159,14 @@ export class ChartComponent implements OnInit {
             {data: filtered_data, label: 'Discharged Patient ' + name}
           ],
           chartLabels: unique_labels,
-          chartOptions: this.chartOptions,
+          chartOptions: {
+            scaleShowVerticalLines: false,
+            responsive: true,
+            title: {
+              display: true,
+              text: name
+            }
+          },
           chartLegend: this.chartLegend,
           chartType: treatment_attr[a].chart_type,
           chartHovered:this.chartHovered,

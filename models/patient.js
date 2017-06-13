@@ -40,7 +40,7 @@ const PatientSchema = mongoose.Schema({
     required: true
   },
   treatments: [{
-    treatment_date: String,
+    treatment_date: Date,
     treatment_used: String,
     vas: Number,
     qal: Number
@@ -50,6 +50,8 @@ const PatientSchema = mongoose.Schema({
     required: true
   }
 });
+
+// TODO: separate dob into year, and treatment date into month and year
 
 const Patient = module.exports = mongoose.model('Patient', PatientSchema);
 
