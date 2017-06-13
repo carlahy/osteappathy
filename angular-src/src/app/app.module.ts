@@ -23,6 +23,8 @@ import { PatientCreateComponent } from './components/patient-create/patient-crea
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { ChartComponent } from './components/chart/chart.component';
 
+import { DatepickerComponent } from './components/datepicker/datepicker.component';
+import { DatepickerModule } from 'ngx-bootstrap/datepicker';
 
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
@@ -43,7 +45,8 @@ const appRoutes: Routes = [
     ProfileComponent,
     PatientEditComponent,
     PatientCreateComponent,
-    ChartComponent
+    ChartComponent,
+    DatepickerComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +54,8 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule,
-    ChartsModule
+    ChartsModule,
+    DatepickerModule.forRoot()
   ],
   providers: [
     ValidateService,

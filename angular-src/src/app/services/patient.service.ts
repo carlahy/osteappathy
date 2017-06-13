@@ -171,7 +171,9 @@ export class PatientService {
   // TODO: call this function
   validateTreatment(treatment){
     for(var r in this.treatment_resource) {
+
       var key = this.treatment_resource[r].key;
+      console.log(key);
       if(treatment[key] == undefined) {
         return false;
       } else {
@@ -215,10 +217,14 @@ export class PatientService {
 
   // Date inputs are binded as strings, convert to Date object
   parseDate(date){
+    let delim = "-";
+    if(date.split("-").length < 3) {
+      delim = "/";
+    }
     const d = {
-      year: parseInt(date.split("-")[0]),
-      month: parseInt(date.split("-")[1])-1,
-      day: parseInt(date.split("-")[2])
+      year: parseInt(date.split(delim)[0]),
+      month: parseInt(date.split(delim)[1])-1,
+      day: parseInt(date.split(delim)[2])
     };
     return new Date(d.year,d.month,d.day);
   }
@@ -227,7 +233,7 @@ export class PatientService {
     const dob = this.parseDate(this.new_patient.dob);
     const ageDate = new Date(Date.now() - dob.getTime());
     const age =  Math.abs(ageDate.getUTCFullYear() - 1970);
-
+    
     this.new_patient.age = age;
     this.new_patient.treatments = [this.new_treatment];
     this.new_patient.discharged = false;

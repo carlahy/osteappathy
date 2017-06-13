@@ -1,0 +1,7 @@
+<div class="input-group">
+  <input type="text" value="{{ getDate() | date:'dd-MM-yyyy' }}" [(ngModel)]="model[key]" class="form-control">
+  <span class="input-group-addon"  (click)="open()"><i class="glyphicon glyphicon-th"></i></span>
+</div>
+<div *ngIf="opened" style="position: absolute; z-index:10; min-height:290px;" (selectionDone)="opened = false">
+  <datepicker [(ngModel)]="dt" [showWeeks]="false"></datepicker>
+</div>
