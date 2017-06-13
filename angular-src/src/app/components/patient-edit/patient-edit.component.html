@@ -69,7 +69,7 @@
               </div>
               <input type="submit" class="btn btn-primary" value="Submit">
             </form>
-            <button type="button" class="btn btn-danger" (click)="discharge()" *ngIf="selected_patient[discharged] == false">Discharge</button>
+            <button type="button" class="btn btn-danger" (click)="discharge()" *ngIf="!selected_patientdischarged">Discharge</button>
           </div>
 
       </div>
