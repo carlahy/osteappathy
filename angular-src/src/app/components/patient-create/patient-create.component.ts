@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { PatientService } from '../../services/patient.service';
+import { DateService } from '../../services/date.service';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
@@ -13,31 +14,12 @@ export class PatientCreateComponent implements OnInit {
   constructor(
     private flashMessage:FlashMessagesService,
     private patientService: PatientService,
-    private dashboardComponent:DashboardComponent
+    private dashboardComponent:DashboardComponent,
+    private dateService: DateService
   ) {
     this.patientService = patientService;
     this.dashboardComponent = dashboardComponent;
-  }
-
-  public dt: Date = new Date();
-  public dt2: Date = new Date();
-  public minDate: Date = new Date();
-  // TODO: maxdate
-
-  public formats: string[] = ['DD-MM-YYYY', 'YYYY/MM/DD', 'DD.MM.YYYY',
-    'shortDate'];
-  public format: string = this.formats[0];
-  public dateOptions: any = {
-    formatYear: 'YY',
-    startingDay: 1
-  };
-  openedPatient = false;
-  openedTreatment = false;
-
-  date = {
-    day:[1,2,3,4,5,6,7,8,9,10],
-    month:[1,2,3,4,5,6,7,8,9,10],
-    year:[2017,2016,2015]
+    this.dateService = dateService;
   }
 
   ngOnInit() {
@@ -57,7 +39,6 @@ export class PatientCreateComponent implements OnInit {
     }
 
     var newPatient =  this.patientService.getNewPatient();
-    console.log('Submitting ' ,newPatient);
 
     this.patientService.createPatient(newPatient).subscribe(data => {
       if(data.success) {
@@ -75,25 +56,4 @@ export class PatientCreateComponent implements OnInit {
     });
   }
 
-  parseDate(dateString) {
-    console.log('Date string = ', dateString);
-    // if(dateString) {
-    //   return new Date(dateString);
-    // } else {
-    //   return null;
-    // }
-  }
-
-  public open(o){
-    switch(o){
-      case 1: this.openedPatient = !this.openedPatient; break;
-      case 2: this.openedTreatment = !this.openedTreatment; break;
-      default: break;
-    }
-    return;
-  }
-
-  public getDate() {
-    return this.dt || new Date();
-  }
 }

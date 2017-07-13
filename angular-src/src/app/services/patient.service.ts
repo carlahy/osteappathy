@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { URLSearchParams, Http, Headers } from '@angular/http';
 import { AuthService } from '../services/auth.service';
+import { DateService } from '../services/date.service';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
@@ -26,6 +27,7 @@ export class PatientService {
   treatment_resource$: BehaviorSubject<any[]>;
 
   new_patient:any;
+
   new_treatment:any;
   selected_patient:any;
 
@@ -36,7 +38,9 @@ export class PatientService {
   constructor(
     private http:Http,
     private authService:AuthService,
+    private dateService:DateService
   ) {
+      this.dateService = dateService;
       this.user_id = this.authService.getUserId();
 
       this.isDev = this.authService.isDev;
@@ -137,6 +141,11 @@ export class PatientService {
       this.discharged_patients = [];
 
       for (var p in data.patients) {
+
+        const ageDate = new Date(Date.now() - new Date(data.patients[p].dob).getTime());
+        const age =  Math.abs(ageDate.getUTCFullYear() - 1970);
+        data.patients[p].age = age;
+
         if (data.patients[p].discharged == false) {
           this.ongoing_patients.push(data.patients[p]);
         } else {
@@ -158,6 +167,14 @@ export class PatientService {
   }
 
   validatePatient(){
+    let dateReq = ['day','month','year']
+    for(var d in dateReq) {
+      if(this.new_patient[dateReq[d]] == undefined) {
+        return false;
+      }
+    }
+    this.new_patient.dob = this.dateService.parseDate(this.new_patient.year,this.new_patient.month,this.new_patient.day);
+
     for(var r in this.patient_resource) {
       var key = this.patient_resource[r].key;
       if(this.new_patient[key] == undefined) {
@@ -168,13 +185,21 @@ export class PatientService {
     }
   }
 
-  // TODO: call this function
   validateTreatment(treatment){
-    for(var r in this.treatment_resource) {
+    let dateReq = ['day','month','year']
+    for(var d in dateReq) {
+      if(this.new_treatment[dateReq[d]] == undefined) {
+        console.log(dateReq[d]);
+        return false;
+      }
+    }
+    this.new_treatment.treatment_date = this.dateService.parseDate(this.new_treatment.year,this.new_treatment.month,this.new_treatment.day);
+    //new Date(this.new_treatment.year,this.new_treatment.month,this.new_treatment.day);
 
+    for(var r in this.treatment_resource) {
       var key = this.treatment_resource[r].key;
-      console.log(key);
       if(treatment[key] == undefined) {
+        console.log('Missing ', key);
         return false;
       } else {
         return true;
@@ -215,28 +240,12 @@ export class PatientService {
     return this.selected_patient;
   }
 
-  // Date inputs are binded as strings, convert to Date object
-  parseDate(date){
-    let delim = "-";
-    if(date.split("-").length < 3) {
-      delim = "/";
-    }
-    const d = {
-      year: parseInt(date.split(delim)[0]),
-      month: parseInt(date.split(delim)[1])-1,
-      day: parseInt(date.split(delim)[2])
-    };
-    return new Date(d.year,d.month,d.day);
-  }
-
   getNewPatient() {
-    const dob = this.parseDate(this.new_patient.dob);
-    const ageDate = new Date(Date.now() - dob.getTime());
-    const age =  Math.abs(ageDate.getUTCFullYear() - 1970);
-    
-    this.new_patient.age = age;
+    console.log(this.new_patient);
+
     this.new_patient.treatments = [this.new_treatment];
     this.new_patient.discharged = false;
+    console.log('New patient result ', this.new_patient);
     return this.new_patient;
   }
 

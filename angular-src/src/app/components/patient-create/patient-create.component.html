@@ -11,19 +11,21 @@
             <label class="control-label col-sm-4">{{r.name}}</label>
             <input type="text" *ngIf="r.type == 1 " [(ngModel)]="patientService.new_patient[r.key]" name="{{r.key}}" class="form-control focusedInput">
 
-            <!-- TODO: clean up <app-datepicker *ngIf="r.type == 2" key="{{r.key}}" model="patientService.new_patient"></app-datepicker> -->
-            <input type="date" *ngIf="r.type == 2" [(ngModel)]="patientService.new_patient[r.key]" name="{{r.key}}" class="form-control"/>
-            <!-- <div class="" *ngIf="r.type == 2">
-              <div class="input-group">
-                <input type="text" value="{{ getDate() | date:'dd-MM-yyyy' }}" [(ngModel)]="patientService.new_patient[r.key]" name={{r.key}} class="form-control">
-                <span class="input-group-addon" (click)="open(1)"><i class="glyphicon glyphicon-th"></i></span>
-              </div>
-              <div *ngIf="openedPatient" style="position: absolute; z-index:10; min-height:290px;" (selectionDone)="openedPatient = false">
-                <datepicker [(ngModel)]="patientService.new_patient[r.key]" name="{{r.key}}" [showWeeks]="false"></datepicker>
-              </div>
-            </div> -->
+            <!-- TODO <app-datepicker *ngIf="r.type == 2" key="{{r.key}}" model="patientService.new_patient"></app-datepicker> -->
+            <div class="" *ngIf="r.type == 2">
+              <select class="form-control" [(ngModel)]="patientService.new_patient.day" name="{{r.key}}">
+                <option *ngFor="let v of dateService.dateFields.days; let i=index">{{i+1}}</option>
+              </select>
+              <select class="form-control" [(ngModel)]="patientService.new_patient.month" name="{{r.key}}">
+                <option *ngFor="let v of dateService.dateFields.months">{{v}}</option>
+              </select>
+              <select class="form-control" [(ngModel)]="patientService.new_patient.year" name="{{r.key}}">
+                <option *ngFor="let v of dateService.dateFields.years; let i=index">{{dateService.year - i}}</option>
+              </select>
+            </div>
 
             <input type="number" *ngIf="r.type == 3" [(ngModel)]="patientService.new_patient[r.key]" name="{{r.key}}" class="form-control"/>
+
             <select class="form-control" *ngIf="r.type == 0" [(ngModel)]="patientService.new_patient[r.key]" name="{{r.key}}">
               <option *ngFor="let v of r.values">{{v}}</option>
             </select>
@@ -34,8 +36,19 @@
           <div class="form-group form-inline" *ngFor="let r of patientService.treatment_resource">
             <label class="control-label col-sm-4">{{r.name}}</label>
             <input type="text" *ngIf="r.type == 1 " [(ngModel)]="patientService.new_treatment[r.key]" name="{{r.key}}" class="form-control focusedInput">
-            <!-- <app-datepicker *ngIf="r.type == 2" key="{{r.key}}" model="patientService.new_patient"></app-datepicker> -->
-            <input type="date" *ngIf="r.type == 2" [(ngModel)]="patientService.new_treatment[r.key]" name="{{r.key}}" class="form-control"/>
+
+            <!--TODO <app-datepicker *ngIf="r.type == 2" name="patientService.new_treatment[{{r.key}}]" key="{{r.key}}" model="patientService.new_treatment" ngModel></app-datepicker> -->
+            <div class="" *ngIf="r.type == 2">
+              <select class="form-control" [(ngModel)]="patientService.new_treatment.day" name="{{r.key}}">
+                <option *ngFor="let v of dateService.dateFields.days; let i=index">{{i+1}}</option>
+              </select>
+              <select class="form-control" [(ngModel)]="patientService.new_treatment.month" name="{{r.key}}">
+                <option *ngFor="let v of dateService.dateFields.months">{{v}}</option>
+              </select>
+              <select class="form-control" [(ngModel)]="patientService.new_treatment.year" name="{{r.key}}">
+                <option *ngFor="let v of dateService.dateFields.years; let i=index">{{dateService.year - i}}</option>
+              </select>
+            </div>
 
             <input type="number" *ngIf="r.type == 3" [(ngModel)]="patientService.new_treatment[r.key]" name="{{r.key}}" class="form-control"/>
             <select class="form-control" *ngIf="r.type == 0" [(ngModel)]="patientService.new_treatment[r.key]" name="{{r.key}}">

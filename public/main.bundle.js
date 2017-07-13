@@ -417,7 +417,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h2 class=\"page-header\">Dashboard</h2>\n<p>Welcome to your dashboard: add new patients, edit current patients, and generate reports.</p>\n\n<div class=\"row top-buffer\">\n  <button type=\"button\" class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#newPatient\">Create new patient</button>\n  <!-- TODO: <button type=\"button\" class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#newPatient\">Generate Report</button> -->\n</div>\n\n<app-patient-create></app-patient-create>\n\n<div class=\"row top-buffer\" *ngIf=\"hasPatients()\">\n  <app-chart></app-chart>\n</div>\n\n<!-- Display Patients -->\n\n<div class=\"row top- bottom-buffer\" *ngIf=\"!hasPatients()\">\n  <div class=\"col-md-6\">\n    <h2>Create a patient to get started</h2>\n  </div>\n</div>\n\n<div class=\"row top-buffer bottom-buffer\" *ngIf=\"hasPatients()\">\n  <!-- Ongoing Patients -->\n  <div class=\"col-md-6\">\n    <h2>Ongoing Patients</h2>\n    <ul *ngIf=\"hasOngoingPatients()\" class=\"list-group\">\n      <a *ngFor=\"let patient of patientService.ongoing_patients\" (click)=\"patientService.setSelectedPatient(patient)\" class=\"list-group-item\" style=\"cursor: pointer\" data-toggle=\"modal\" data-target=\"#editPatient\">\n          <h4>Patient {{patient.patient_num}}</h4>\n          <span>{{patient.age}} year old {{patient.ethnicity}} {{patient.sex}}, {{patient.occupation}}</span>\n          <br>\n          <span><b>Complaint: {{patient.stage}} {{patient.site_of_complaint}}</b></span>\n      </a>\n    </ul>\n  </div>\n\n  <!-- Discharged Patients -->\n  <div class=\"col-md-6\">\n    <h2>Discharged Patients</h2>\n    <ul *ngIf=\"hasDischargedPatients()\" class=\"list-group\">\n      <a *ngFor=\"let patient of patientService.discharged_patients\"  class=\"list-group-item\" style=\"cursor: pointer\" data-toggle=\"modal\" data-target=\"#editPatient\" (click)=\"patientService.setSelectedPatient(patient)\">\n        <h4>Patient {{patient.patient_num}}</h4>\n        <span>{{patient.age}} year old {{patient.ethnicity}} {{patient.sex}}, {{patient.occupation}}</span>\n        <br>\n        <span><b>Complaint: {{patient.stage}} {{patient.site_of_complaint}}</b></span>\n      </a>\n    </ul>\n  </div>\n  <app-patient-edit></app-patient-edit>\n</div>\n"
+module.exports = "<h2 class=\"page-header\">Dashboard</h2>\n<p>Welcome to your dashboard: add new patients, edit current patients, and generate reports.</p>\n\n<div class=\"row top-buffer\">\n  <button type=\"button\" class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#newPatient\">Create new patient</button>\n  <!-- TODO: <button type=\"button\" class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#newPatient\">Generate Report</button> -->\n</div>\n\n<app-patient-create></app-patient-create>\n\n<div class=\"row top-buffer\" *ngIf=\"hasDischargedPatients()\">\n  <app-chart></app-chart>\n</div>\n\n<!-- Display Patients -->\n\n<div class=\"row top- bottom-buffer\" *ngIf=\"!hasPatients()\">\n  <div class=\"col-md-6\">\n    <h2>Create a patient to get started</h2>\n  </div>\n</div>\n\n<div class=\"row top-buffer bottom-buffer\" *ngIf=\"hasPatients()\">\n  <!-- Ongoing Patients -->\n  <div class=\"col-md-6\">\n    <h2>Ongoing Patients</h2>\n    <ul *ngIf=\"hasOngoingPatients()\" class=\"list-group\">\n      <a *ngFor=\"let patient of patientService.ongoing_patients\" (click)=\"patientService.setSelectedPatient(patient)\" class=\"list-group-item\" style=\"cursor: pointer\" data-toggle=\"modal\" data-target=\"#editPatient\">\n          <h4>Patient {{patient.patient_num}}</h4>\n          <span>{{patient.age}} year old {{patient.ethnicity}} {{patient.sex}}, {{patient.occupation}}</span>\n          <br>\n          <span><b>Complaint: {{patient.stage}} {{patient.site_of_complaint}}</b></span>\n      </a>\n    </ul>\n  </div>\n\n  <!-- Discharged Patients -->\n  <div class=\"col-md-6\">\n    <h2>Discharged Patients</h2>\n    <ul *ngIf=\"hasDischargedPatients()\" class=\"list-group\">\n      <a *ngFor=\"let patient of patientService.discharged_patients\"  class=\"list-group-item\" style=\"cursor: pointer\" data-toggle=\"modal\" data-target=\"#editPatient\" (click)=\"patientService.setSelectedPatient(patient)\">\n        <h4>Patient {{patient.patient_num}}</h4>\n        <span>{{patient.age}} year old {{patient.ethnicity}} {{patient.sex}}, {{patient.occupation}}</span>\n        <br>\n        <span><b>Complaint: {{patient.stage}} {{patient.site_of_complaint}}</b></span>\n      </a>\n    </ul>\n  </div>\n  <app-patient-edit></app-patient-edit>\n</div>\n"
 
 /***/ }),
 
@@ -518,7 +518,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/datepicker/datepicker.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"input-group\">\n  <input type=\"text\" value=\"{{ getDate() | date:'dd-MM-yyyy' }}\" [(ngModel)]=\"model[key]\" class=\"form-control\">\n  <span class=\"input-group-addon\"  (click)=\"open()\"><i class=\"glyphicon glyphicon-th\"></i></span>\n</div>\n<div *ngIf=\"opened\" style=\"position: absolute; z-index:10; min-height:290px;\" (selectionDone)=\"opened = false\">\n  <datepicker [(ngModel)]=\"dt\" [showWeeks]=\"false\"></datepicker>\n</div>\n"
+module.exports = "<!-- <div class=\"input-group\">\n  <input type=\"text\" value=\"{{ getDate() | date:'dd-MM-yyyy' }}\" [(ngModel)]=\"model[key]\" class=\"form-control\">\n  <span class=\"input-group-addon\"  (click)=\"open()\"><i class=\"glyphicon glyphicon-th\"></i></span>\n</div>\n<div *ngIf=\"opened\" style=\"position: absolute; z-index:10; min-height:290px;\" (selectionDone)=\"opened = false\">\n  <datepicker [(ngModel)]=\"dt\" [showWeeks]=\"false\"></datepicker>\n</div> -->\n<p>hello</p>\n"
 
 /***/ }),
 
@@ -851,7 +851,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/patient-create/patient-create.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal fade\" id=\"newPatient\" role=\"dialog\">\n  <div class=\"modal-dialog\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h4 class=\"modal-title\">New Patient</h4>\n      </div>\n      <flash-messages></flash-messages>\n      <div class=\"modal-body\">\n        <form (submit)=\"createPatient()\" class=\"form-horizontal\" autocomplete=\"off\">\n          <div class=\"form-group form-inline\" *ngFor=\"let r of patientService.patient_resource\">\n            <label class=\"control-label col-sm-4\">{{r.name}}</label>\n            <input type=\"text\" *ngIf=\"r.type == 1 \" [(ngModel)]=\"patientService.new_patient[r.key]\" name=\"{{r.key}}\" class=\"form-control focusedInput\">\n\n            <!-- TODO: clean up <app-datepicker *ngIf=\"r.type == 2\" key=\"{{r.key}}\" model=\"patientService.new_patient\"></app-datepicker> -->\n            <input type=\"date\" *ngIf=\"r.type == 2\" [(ngModel)]=\"patientService.new_patient[r.key]\" name=\"{{r.key}}\" class=\"form-control\"/>\n            <!-- <div class=\"\" *ngIf=\"r.type == 2\">\n              <div class=\"input-group\">\n                <input type=\"text\" value=\"{{ getDate() | date:'dd-MM-yyyy' }}\" [(ngModel)]=\"patientService.new_patient[r.key]\" name={{r.key}} class=\"form-control\">\n                <span class=\"input-group-addon\" (click)=\"open(1)\"><i class=\"glyphicon glyphicon-th\"></i></span>\n              </div>\n              <div *ngIf=\"openedPatient\" style=\"position: absolute; z-index:10; min-height:290px;\" (selectionDone)=\"openedPatient = false\">\n                <datepicker [(ngModel)]=\"patientService.new_patient[r.key]\" name=\"{{r.key}}\" [showWeeks]=\"false\"></datepicker>\n              </div>\n            </div> -->\n\n            <input type=\"number\" *ngIf=\"r.type == 3\" [(ngModel)]=\"patientService.new_patient[r.key]\" name=\"{{r.key}}\" class=\"form-control\"/>\n            <select class=\"form-control\" *ngIf=\"r.type == 0\" [(ngModel)]=\"patientService.new_patient[r.key]\" name=\"{{r.key}}\">\n              <option *ngFor=\"let v of r.values\">{{v}}</option>\n            </select>\n          </div>\n\n          <p>This treatment is the consult</p>\n\n          <div class=\"form-group form-inline\" *ngFor=\"let r of patientService.treatment_resource\">\n            <label class=\"control-label col-sm-4\">{{r.name}}</label>\n            <input type=\"text\" *ngIf=\"r.type == 1 \" [(ngModel)]=\"patientService.new_treatment[r.key]\" name=\"{{r.key}}\" class=\"form-control focusedInput\">\n            <!-- <app-datepicker *ngIf=\"r.type == 2\" key=\"{{r.key}}\" model=\"patientService.new_patient\"></app-datepicker> -->\n            <input type=\"date\" *ngIf=\"r.type == 2\" [(ngModel)]=\"patientService.new_treatment[r.key]\" name=\"{{r.key}}\" class=\"form-control\"/>\n\n            <input type=\"number\" *ngIf=\"r.type == 3\" [(ngModel)]=\"patientService.new_treatment[r.key]\" name=\"{{r.key}}\" class=\"form-control\"/>\n            <select class=\"form-control\" *ngIf=\"r.type == 0\" [(ngModel)]=\"patientService.new_treatment[r.key]\" name=\"{{r.key}}\">\n              <option *ngFor=\"let v of r.values\">{{v}}</option>\n            </select>\n          </div>\n\n          <input type=\"submit\" class=\"btn btn-primary\" value=\"Submit\">\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"modal fade\" id=\"newPatient\" role=\"dialog\">\n  <div class=\"modal-dialog\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h4 class=\"modal-title\">New Patient</h4>\n      </div>\n      <flash-messages></flash-messages>\n      <div class=\"modal-body\">\n        <form (submit)=\"createPatient()\" class=\"form-horizontal\" autocomplete=\"off\">\n          <div class=\"form-group form-inline\" *ngFor=\"let r of patientService.patient_resource\">\n            <label class=\"control-label col-sm-4\">{{r.name}}</label>\n            <input type=\"text\" *ngIf=\"r.type == 1 \" [(ngModel)]=\"patientService.new_patient[r.key]\" name=\"{{r.key}}\" class=\"form-control focusedInput\">\n\n            <app-datepicker *ngIf=\"r.type == 2\" key=\"{{r.key}}\" model=\"patientService.new_patient\"></app-datepicker>\n            <!-- <input type=\"date\" *ngIf=\"r.type == 2\" [(ngModel)]=\"patientService.new_patient[r.key]\" name=\"{{r.key}}\" class=\"form-control\"/> -->\n\n            <input type=\"number\" *ngIf=\"r.type == 3\" [(ngModel)]=\"patientService.new_patient[r.key]\" name=\"{{r.key}}\" class=\"form-control\"/>\n            <select class=\"form-control\" *ngIf=\"r.type == 0\" [(ngModel)]=\"patientService.new_patient[r.key]\" name=\"{{r.key}}\">\n              <option *ngFor=\"let v of r.values\">{{v}}</option>\n            </select>\n          </div>\n\n          <p>This treatment is the consult</p>\n\n          <div class=\"form-group form-inline\" *ngFor=\"let r of patientService.treatment_resource\">\n            <label class=\"control-label col-sm-4\">{{r.name}}</label>\n            <input type=\"text\" *ngIf=\"r.type == 1 \" [(ngModel)]=\"patientService.new_treatment[r.key]\" name=\"{{r.key}}\" class=\"form-control focusedInput\">\n            <!-- <app-datepicker *ngIf=\"r.type == 2\" key=\"{{r.key}}\" model=\"patientService.new_patient\"></app-datepicker> -->\n            <input type=\"date\" *ngIf=\"r.type == 2\" [(ngModel)]=\"patientService.new_treatment[r.key]\" name=\"{{r.key}}\" class=\"form-control\"/>\n\n            <input type=\"number\" *ngIf=\"r.type == 3\" [(ngModel)]=\"patientService.new_treatment[r.key]\" name=\"{{r.key}}\" class=\"form-control\"/>\n            <select class=\"form-control\" *ngIf=\"r.type == 0\" [(ngModel)]=\"patientService.new_treatment[r.key]\" name=\"{{r.key}}\">\n              <option *ngFor=\"let v of r.values\">{{v}}</option>\n            </select>\n          </div>\n\n          <input type=\"submit\" class=\"btn btn-primary\" value=\"Submit\">\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -917,7 +917,6 @@ var PatientCreateComponent = (function () {
             return false;
         }
         var newPatient = this.patientService.getNewPatient();
-        console.log('Submitting ', newPatient);
         this.patientService.createPatient(newPatient).subscribe(function (data) {
             if (data.success) {
                 _this.flashMessage.show(data.msg, { cssClass: 'alert-success', timeout: 3000 });
@@ -1357,7 +1356,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var AuthService = (function () {
     function AuthService(http) {
         this.http = http;
-        this.isDev = true;
+        this.isDev = false;
     }
     AuthService.prototype.registerUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
@@ -1548,6 +1547,10 @@ var PatientService = (function () {
             _this.ongoing_patients = [];
             _this.discharged_patients = [];
             for (var p in data.patients) {
+                console.log(data.patients[p].dob);
+                // const ageDate = new Date(Date.now() - data.patients[p].dob;//.getTime());
+                // const age =  Math.abs(ageDate.getUTCFullYear() - 1970);
+                // data.patients[p].age = age;
                 if (data.patients[p].discharged == false) {
                     _this.ongoing_patients.push(data.patients[p]);
                 }
@@ -1577,11 +1580,9 @@ var PatientService = (function () {
             }
         }
     };
-    // TODO: call this function
     PatientService.prototype.validateTreatment = function (treatment) {
         for (var r in this.treatment_resource) {
             var key = this.treatment_resource[r].key;
-            console.log(key);
             if (treatment[key] == undefined) {
                 return false;
             }
@@ -1633,9 +1634,6 @@ var PatientService = (function () {
     };
     PatientService.prototype.getNewPatient = function () {
         var dob = this.parseDate(this.new_patient.dob);
-        var ageDate = new Date(Date.now() - dob.getTime());
-        var age = Math.abs(ageDate.getUTCFullYear() - 1970);
-        this.new_patient.age = age;
         this.new_patient.treatments = [this.new_treatment];
         this.new_patient.discharged = false;
         return this.new_patient;

@@ -19,6 +19,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { PatientService } from './services/patient.service';
 import { PatientEditComponent } from './components/patient-edit/patient-edit.component';
 import { PatientCreateComponent } from './components/patient-create/patient-create.component';
+import { DateService } from './services/date.service'
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { ChartComponent } from './components/chart/chart.component';
@@ -61,7 +62,9 @@ const appRoutes: Routes = [
     ValidateService,
     AuthService,
     AuthGuard,
-    PatientService],
+    PatientService,
+    DateService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

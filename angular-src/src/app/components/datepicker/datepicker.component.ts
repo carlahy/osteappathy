@@ -9,22 +9,30 @@ import * as moment from 'moment';
 })
 export class DatepickerComponent implements OnInit {
 
-  @Input() key: any;
-  @Input() model: any;
+  @Input() key: string;
+  @Input() model: string;
 
-  public dt: Date = new Date();
-  public minDate: Date = new Date();
-  // TODO: maxdate
+  public today: Date = new Date();
+  public year = this.today.getUTCFullYear();
 
-  public formats: string[] = ['DD-MM-YYYY', 'YYYY/MM/DD', 'DD.MM.YYYY',
-    'shortDate'];
-  public format: string = this.formats[0];
-  public dateOptions: any = {
-    formatYear: 'YY',
-    startingDay: 1
+  public dateFields = {
+    days: Array(31),
+    months: [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+          ],
+    years: Array(100)
   };
-  private opened: boolean = false;
-  private closed: boolean = true;
 
   constructor(
     private patientService:PatientService
@@ -33,19 +41,11 @@ export class DatepickerComponent implements OnInit {
   }
 
   ngOnInit() {
-    (this.minDate = new Date()).setDate(this.minDate.getDate() - 1000);
+    console.log(this.key + ' and ' + this.model);
   }
 
   public getDate() {
-    return this.dt && this.dt.getTime() || new Date().getTime();
-  }
-
-  public today(): void {
-    this.dt = new Date();
-  }
-
-  public open(): void {
-    this.opened = !this.opened;
+    return this.today && this.today.getTime() || new Date().getTime();
   }
 
 }

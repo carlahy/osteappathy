@@ -12,11 +12,7 @@ const PatientSchema = mongoose.Schema({
     required: true
   },
   dob: {
-    type: Date,
-    required: true
-  },
-  age: {
-    type: Number,
+    type: Object,
     required: true
   },
   ethnicity: {

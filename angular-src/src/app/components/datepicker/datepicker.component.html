@@ -1,7 +1,11 @@
-<div class="input-group">
-  <input type="text" value="{{ getDate() | date:'dd-MM-yyyy' }}" [(ngModel)]="model[key]" class="form-control">
-  <span class="input-group-addon"  (click)="open()"><i class="glyphicon glyphicon-th"></i></span>
-</div>
-<div *ngIf="opened" style="position: absolute; z-index:10; min-height:290px;" (selectionDone)="opened = false">
-  <datepicker [(ngModel)]="dt" [showWeeks]="false"></datepicker>
+<div class="">
+  <select class="form-control" [(ngModel)]="patientService.new_treatment['treatment_date']" name="{{model[key]}}">
+    <option *ngFor="let v of dateFields.days; let i=index">{{i+1}}</option>
+  </select>
+  <select class="form-control" [(ngModel)]="model" name="{{model[key]}}">
+    <option *ngFor="let v of dateFields.months">{{v}}</option>
+  </select>
+  <select class="form-control" [(ngModel)]="model" name="{{model[key]}}">
+    <option *ngFor="let v of dateFields.years; let i=index">{{year - i}}</option>
+  </select>
 </div>
