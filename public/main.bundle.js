@@ -94,11 +94,12 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_patient_service__ = __webpack_require__("../../../../../src/app/services/patient.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_patient_edit_patient_edit_component__ = __webpack_require__("../../../../../src/app/components/patient-edit/patient-edit.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_patient_create_patient_create_component__ = __webpack_require__("../../../../../src/app/components/patient-create/patient-create.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ng2_charts_ng2_charts__ = __webpack_require__("../../../../ng2-charts/ng2-charts.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ng2_charts_ng2_charts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_ng2_charts_ng2_charts__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_chart_chart_component__ = __webpack_require__("../../../../../src/app/components/chart/chart.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_datepicker_datepicker_component__ = __webpack_require__("../../../../../src/app/components/datepicker/datepicker.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_ngx_bootstrap_datepicker__ = __webpack_require__("../../../../ngx-bootstrap/datepicker/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_date_service__ = __webpack_require__("../../../../../src/app/services/date.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_ng2_charts_ng2_charts__ = __webpack_require__("../../../../ng2-charts/ng2-charts.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_ng2_charts_ng2_charts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20_ng2_charts_ng2_charts__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_chart_chart_component__ = __webpack_require__("../../../../../src/app/components/chart/chart.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_datepicker_datepicker_component__ = __webpack_require__("../../../../../src/app/components/datepicker/datepicker.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23_ngx_bootstrap_datepicker__ = __webpack_require__("../../../../ngx-bootstrap/datepicker/index.js");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -106,6 +107,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -153,8 +155,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_11__components_profile_profile_component__["a" /* ProfileComponent */],
             __WEBPACK_IMPORTED_MODULE_17__components_patient_edit_patient_edit_component__["a" /* PatientEditComponent */],
             __WEBPACK_IMPORTED_MODULE_18__components_patient_create_patient_create_component__["a" /* PatientCreateComponent */],
-            __WEBPACK_IMPORTED_MODULE_20__components_chart_chart_component__["a" /* ChartComponent */],
-            __WEBPACK_IMPORTED_MODULE_21__components_datepicker_datepicker_component__["a" /* DatepickerComponent */]
+            __WEBPACK_IMPORTED_MODULE_21__components_chart_chart_component__["a" /* ChartComponent */],
+            __WEBPACK_IMPORTED_MODULE_22__components_datepicker_datepicker_component__["a" /* DatepickerComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -162,14 +164,15 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_3__angular_http__["HttpModule"],
             __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forRoot(appRoutes),
             __WEBPACK_IMPORTED_MODULE_13_angular2_flash_messages__["FlashMessagesModule"],
-            __WEBPACK_IMPORTED_MODULE_19_ng2_charts_ng2_charts__["ChartsModule"],
-            __WEBPACK_IMPORTED_MODULE_22_ngx_bootstrap_datepicker__["a" /* DatepickerModule */].forRoot()
+            __WEBPACK_IMPORTED_MODULE_20_ng2_charts_ng2_charts__["ChartsModule"],
+            __WEBPACK_IMPORTED_MODULE_23_ngx_bootstrap_datepicker__["a" /* DatepickerModule */].forRoot()
         ],
         providers: [
             __WEBPACK_IMPORTED_MODULE_12__services_validate_service__["a" /* ValidateService */],
             __WEBPACK_IMPORTED_MODULE_14__services_auth_service__["a" /* AuthService */],
             __WEBPACK_IMPORTED_MODULE_15__guards_auth_guard__["a" /* AuthGuard */],
-            __WEBPACK_IMPORTED_MODULE_16__services_patient_service__["a" /* PatientService */]
+            __WEBPACK_IMPORTED_MODULE_16__services_patient_service__["a" /* PatientService */],
+            __WEBPACK_IMPORTED_MODULE_19__services_date_service__["a" /* DateService */]
         ],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_5__app_component__["a" /* AppComponent */]]
     })
@@ -518,7 +521,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/datepicker/datepicker.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <div class=\"input-group\">\n  <input type=\"text\" value=\"{{ getDate() | date:'dd-MM-yyyy' }}\" [(ngModel)]=\"model[key]\" class=\"form-control\">\n  <span class=\"input-group-addon\"  (click)=\"open()\"><i class=\"glyphicon glyphicon-th\"></i></span>\n</div>\n<div *ngIf=\"opened\" style=\"position: absolute; z-index:10; min-height:290px;\" (selectionDone)=\"opened = false\">\n  <datepicker [(ngModel)]=\"dt\" [showWeeks]=\"false\"></datepicker>\n</div> -->\n<p>hello</p>\n"
+module.exports = "<div class=\"\">\n  <select class=\"form-control\" [(ngModel)]=\"patientService.new_treatment['treatment_date']\" name=\"{{model[key]}}\">\n    <option *ngFor=\"let v of dateFields.days; let i=index\">{{i+1}}</option>\n  </select>\n  <select class=\"form-control\" [(ngModel)]=\"model\" name=\"{{model[key]}}\">\n    <option *ngFor=\"let v of dateFields.months\">{{v}}</option>\n  </select>\n  <select class=\"form-control\" [(ngModel)]=\"model\" name=\"{{model[key]}}\">\n    <option *ngFor=\"let v of dateFields.years; let i=index\">{{year - i}}</option>\n  </select>\n</div>\n"
 
 /***/ }),
 
@@ -543,41 +546,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var DatepickerComponent = (function () {
     function DatepickerComponent(patientService) {
         this.patientService = patientService;
-        this.dt = new Date();
-        this.minDate = new Date();
-        // TODO: maxdate
-        this.formats = ['DD-MM-YYYY', 'YYYY/MM/DD', 'DD.MM.YYYY',
-            'shortDate'];
-        this.format = this.formats[0];
-        this.dateOptions = {
-            formatYear: 'YY',
-            startingDay: 1
+        this.today = new Date();
+        this.year = this.today.getUTCFullYear();
+        this.dateFields = {
+            days: Array(31),
+            months: [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December'
+            ],
+            years: Array(100)
         };
-        this.opened = false;
-        this.closed = true;
         this.patientService = patientService;
     }
     DatepickerComponent.prototype.ngOnInit = function () {
-        (this.minDate = new Date()).setDate(this.minDate.getDate() - 1000);
+        console.log(this.key + ' and ' + this.model);
     };
     DatepickerComponent.prototype.getDate = function () {
-        return this.dt && this.dt.getTime() || new Date().getTime();
-    };
-    DatepickerComponent.prototype.today = function () {
-        this.dt = new Date();
-    };
-    DatepickerComponent.prototype.open = function () {
-        this.opened = !this.opened;
+        return this.today && this.today.getTime() || new Date().getTime();
     };
     return DatepickerComponent;
 }());
 __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
-    __metadata("design:type", Object)
+    __metadata("design:type", String)
 ], DatepickerComponent.prototype, "key", void 0);
 __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
-    __metadata("design:type", Object)
+    __metadata("design:type", String)
 ], DatepickerComponent.prototype, "model", void 0);
 DatepickerComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -851,7 +856,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/patient-create/patient-create.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal fade\" id=\"newPatient\" role=\"dialog\">\n  <div class=\"modal-dialog\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h4 class=\"modal-title\">New Patient</h4>\n      </div>\n      <flash-messages></flash-messages>\n      <div class=\"modal-body\">\n        <form (submit)=\"createPatient()\" class=\"form-horizontal\" autocomplete=\"off\">\n          <div class=\"form-group form-inline\" *ngFor=\"let r of patientService.patient_resource\">\n            <label class=\"control-label col-sm-4\">{{r.name}}</label>\n            <input type=\"text\" *ngIf=\"r.type == 1 \" [(ngModel)]=\"patientService.new_patient[r.key]\" name=\"{{r.key}}\" class=\"form-control focusedInput\">\n\n            <app-datepicker *ngIf=\"r.type == 2\" key=\"{{r.key}}\" model=\"patientService.new_patient\"></app-datepicker>\n            <!-- <input type=\"date\" *ngIf=\"r.type == 2\" [(ngModel)]=\"patientService.new_patient[r.key]\" name=\"{{r.key}}\" class=\"form-control\"/> -->\n\n            <input type=\"number\" *ngIf=\"r.type == 3\" [(ngModel)]=\"patientService.new_patient[r.key]\" name=\"{{r.key}}\" class=\"form-control\"/>\n            <select class=\"form-control\" *ngIf=\"r.type == 0\" [(ngModel)]=\"patientService.new_patient[r.key]\" name=\"{{r.key}}\">\n              <option *ngFor=\"let v of r.values\">{{v}}</option>\n            </select>\n          </div>\n\n          <p>This treatment is the consult</p>\n\n          <div class=\"form-group form-inline\" *ngFor=\"let r of patientService.treatment_resource\">\n            <label class=\"control-label col-sm-4\">{{r.name}}</label>\n            <input type=\"text\" *ngIf=\"r.type == 1 \" [(ngModel)]=\"patientService.new_treatment[r.key]\" name=\"{{r.key}}\" class=\"form-control focusedInput\">\n            <!-- <app-datepicker *ngIf=\"r.type == 2\" key=\"{{r.key}}\" model=\"patientService.new_patient\"></app-datepicker> -->\n            <input type=\"date\" *ngIf=\"r.type == 2\" [(ngModel)]=\"patientService.new_treatment[r.key]\" name=\"{{r.key}}\" class=\"form-control\"/>\n\n            <input type=\"number\" *ngIf=\"r.type == 3\" [(ngModel)]=\"patientService.new_treatment[r.key]\" name=\"{{r.key}}\" class=\"form-control\"/>\n            <select class=\"form-control\" *ngIf=\"r.type == 0\" [(ngModel)]=\"patientService.new_treatment[r.key]\" name=\"{{r.key}}\">\n              <option *ngFor=\"let v of r.values\">{{v}}</option>\n            </select>\n          </div>\n\n          <input type=\"submit\" class=\"btn btn-primary\" value=\"Submit\">\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"modal fade\" id=\"newPatient\" role=\"dialog\">\n  <div class=\"modal-dialog\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h4 class=\"modal-title\">New Patient</h4>\n      </div>\n      <flash-messages></flash-messages>\n      <div class=\"modal-body\">\n        <form (submit)=\"createPatient()\" class=\"form-horizontal\" autocomplete=\"off\">\n          <div class=\"form-group form-inline\" *ngFor=\"let r of patientService.patient_resource\">\n            <label class=\"control-label col-sm-4\">{{r.name}}</label>\n            <input type=\"text\" *ngIf=\"r.type == 1 \" [(ngModel)]=\"patientService.new_patient[r.key]\" name=\"{{r.key}}\" class=\"form-control focusedInput\">\n\n            <!-- TODO <app-datepicker *ngIf=\"r.type == 2\" key=\"{{r.key}}\" model=\"patientService.new_patient\"></app-datepicker> -->\n            <div class=\"\" *ngIf=\"r.type == 2\">\n              <select class=\"form-control\" [(ngModel)]=\"patientService.new_patient.day\" name=\"{{r.key}}\">\n                <option *ngFor=\"let v of dateService.dateFields.days; let i=index\">{{i+1}}</option>\n              </select>\n              <select class=\"form-control\" [(ngModel)]=\"patientService.new_patient.month\" name=\"{{r.key}}\">\n                <option *ngFor=\"let v of dateService.dateFields.months\">{{v}}</option>\n              </select>\n              <select class=\"form-control\" [(ngModel)]=\"patientService.new_patient.year\" name=\"{{r.key}}\">\n                <option *ngFor=\"let v of dateService.dateFields.years; let i=index\">{{dateService.year - i}}</option>\n              </select>\n            </div>\n\n            <input type=\"number\" *ngIf=\"r.type == 3\" [(ngModel)]=\"patientService.new_patient[r.key]\" name=\"{{r.key}}\" class=\"form-control\"/>\n\n            <select class=\"form-control\" *ngIf=\"r.type == 0\" [(ngModel)]=\"patientService.new_patient[r.key]\" name=\"{{r.key}}\">\n              <option *ngFor=\"let v of r.values\">{{v}}</option>\n            </select>\n          </div>\n\n          <p>This treatment is the consult</p>\n\n          <div class=\"form-group form-inline\" *ngFor=\"let r of patientService.treatment_resource\">\n            <label class=\"control-label col-sm-4\">{{r.name}}</label>\n            <input type=\"text\" *ngIf=\"r.type == 1 \" [(ngModel)]=\"patientService.new_treatment[r.key]\" name=\"{{r.key}}\" class=\"form-control focusedInput\">\n\n            <!--TODO <app-datepicker *ngIf=\"r.type == 2\" name=\"patientService.new_treatment[{{r.key}}]\" key=\"{{r.key}}\" model=\"patientService.new_treatment\" ngModel></app-datepicker> -->\n            <div class=\"\" *ngIf=\"r.type == 2\">\n              <select class=\"form-control\" [(ngModel)]=\"patientService.new_treatment.day\" name=\"{{r.key}}\">\n                <option *ngFor=\"let v of dateService.dateFields.days; let i=index\">{{i+1}}</option>\n              </select>\n              <select class=\"form-control\" [(ngModel)]=\"patientService.new_treatment.month\" name=\"{{r.key}}\">\n                <option *ngFor=\"let v of dateService.dateFields.months\">{{v}}</option>\n              </select>\n              <select class=\"form-control\" [(ngModel)]=\"patientService.new_treatment.year\" name=\"{{r.key}}\">\n                <option *ngFor=\"let v of dateService.dateFields.years; let i=index\">{{dateService.year - i}}</option>\n              </select>\n            </div>\n\n            <input type=\"number\" *ngIf=\"r.type == 3\" [(ngModel)]=\"patientService.new_treatment[r.key]\" name=\"{{r.key}}\" class=\"form-control\"/>\n            <select class=\"form-control\" *ngIf=\"r.type == 0\" [(ngModel)]=\"patientService.new_treatment[r.key]\" name=\"{{r.key}}\">\n              <option *ngFor=\"let v of r.values\">{{v}}</option>\n            </select>\n          </div>\n\n          <input type=\"submit\" class=\"btn btn-primary\" value=\"Submit\">\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -863,7 +868,8 @@ module.exports = "<div class=\"modal fade\" id=\"newPatient\" role=\"dialog\">\n
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angular2_flash_messages__ = __webpack_require__("../../../../angular2-flash-messages/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_angular2_flash_messages__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_patient_service__ = __webpack_require__("../../../../../src/app/services/patient.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dashboard_dashboard_component__ = __webpack_require__("../../../../../src/app/components/dashboard/dashboard.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_date_service__ = __webpack_require__("../../../../../src/app/services/date.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dashboard_dashboard_component__ = __webpack_require__("../../../../../src/app/components/dashboard/dashboard.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PatientCreateComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -878,31 +884,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var PatientCreateComponent = (function () {
-    function PatientCreateComponent(flashMessage, patientService, dashboardComponent) {
+    function PatientCreateComponent(flashMessage, patientService, dashboardComponent, dateService) {
         this.flashMessage = flashMessage;
         this.patientService = patientService;
         this.dashboardComponent = dashboardComponent;
-        this.dt = new Date();
-        this.dt2 = new Date();
-        this.minDate = new Date();
-        // TODO: maxdate
-        this.formats = ['DD-MM-YYYY', 'YYYY/MM/DD', 'DD.MM.YYYY',
-            'shortDate'];
-        this.format = this.formats[0];
-        this.dateOptions = {
-            formatYear: 'YY',
-            startingDay: 1
-        };
-        this.openedPatient = false;
-        this.openedTreatment = false;
-        this.date = {
-            day: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            month: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            year: [2017, 2016, 2015]
-        };
+        this.dateService = dateService;
         this.patientService = patientService;
         this.dashboardComponent = dashboardComponent;
+        this.dateService = dateService;
     }
     PatientCreateComponent.prototype.ngOnInit = function () {
     };
@@ -934,29 +925,6 @@ var PatientCreateComponent = (function () {
             }
         });
     };
-    PatientCreateComponent.prototype.parseDate = function (dateString) {
-        console.log('Date string = ', dateString);
-        // if(dateString) {
-        //   return new Date(dateString);
-        // } else {
-        //   return null;
-        // }
-    };
-    PatientCreateComponent.prototype.open = function (o) {
-        switch (o) {
-            case 1:
-                this.openedPatient = !this.openedPatient;
-                break;
-            case 2:
-                this.openedTreatment = !this.openedTreatment;
-                break;
-            default: break;
-        }
-        return;
-    };
-    PatientCreateComponent.prototype.getDate = function () {
-        return this.dt || new Date();
-    };
     return PatientCreateComponent;
 }());
 PatientCreateComponent = __decorate([
@@ -965,10 +933,10 @@ PatientCreateComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/patient-create/patient-create.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/patient-create/patient-create.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_angular2_flash_messages__["FlashMessagesService"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_patient_service__["a" /* PatientService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_patient_service__["a" /* PatientService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__dashboard_dashboard_component__["a" /* DashboardComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__dashboard_dashboard_component__["a" /* DashboardComponent */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_angular2_flash_messages__["FlashMessagesService"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_patient_service__["a" /* PatientService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_patient_service__["a" /* PatientService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__dashboard_dashboard_component__["a" /* DashboardComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__dashboard_dashboard_component__["a" /* DashboardComponent */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__services_date_service__["a" /* DateService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_date_service__["a" /* DateService */]) === "function" && _d || Object])
 ], PatientCreateComponent);
 
-var _a, _b, _c;
+var _a, _b, _c, _d;
 //# sourceMappingURL=/Users/carlahyenne/Documents/osteappathy/angular-src/src/patient-create.component.js.map
 
 /***/ }),
@@ -1356,7 +1324,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var AuthService = (function () {
     function AuthService(http) {
         this.http = http;
-        this.isDev = false;
+        this.isDev = true;
     }
     AuthService.prototype.registerUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
@@ -1423,6 +1391,60 @@ var _a;
 
 /***/ }),
 
+/***/ "../../../../../src/app/services/date.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/index.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DateService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var DateService = (function () {
+    function DateService() {
+        this.today = new Date();
+        this.year = this.today.getUTCFullYear();
+        this.dateFields = {
+            days: Array(31),
+            months: [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December'
+            ],
+            years: Array(100)
+        };
+    }
+    DateService.prototype.parseDate = function (year, month, day) {
+        console.log(year, month, this.dateFields.months.indexOf(month), day);
+        return new Date(year, this.dateFields.months.indexOf(month), day);
+    };
+    return DateService;
+}());
+DateService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [])
+], DateService);
+
+//# sourceMappingURL=/Users/carlahyenne/Documents/osteappathy/angular-src/src/date.service.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/services/patient.service.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1430,10 +1452,11 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/BehaviorSubject.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_BehaviorSubject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_BehaviorSubject__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/add/operator/map.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_date_service__ = __webpack_require__("../../../../../src/app/services/date.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/BehaviorSubject.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PatientService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1449,24 +1472,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var PatientService = (function () {
-    function PatientService(http, authService) {
+    function PatientService(http, authService, dateService) {
         var _this = this;
         this.http = http;
         this.authService = authService;
+        this.dateService = dateService;
         this.patients = [];
         this.ongoing_patients = [];
         this.discharged_patients = [];
+        this.dateService = dateService;
         this.user_id = this.authService.getUserId();
         this.isDev = this.authService.isDev;
         this.new_patient = {};
         this.new_treatment = {};
-        this.patients$ = new __WEBPACK_IMPORTED_MODULE_3_rxjs_BehaviorSubject__["BehaviorSubject"]([]);
-        this.ongoing_patients$ = new __WEBPACK_IMPORTED_MODULE_3_rxjs_BehaviorSubject__["BehaviorSubject"]([]);
-        this.discharged_patients$ = new __WEBPACK_IMPORTED_MODULE_3_rxjs_BehaviorSubject__["BehaviorSubject"]([]);
-        this.patient_resource$ = new __WEBPACK_IMPORTED_MODULE_3_rxjs_BehaviorSubject__["BehaviorSubject"]([])
+        this.patients$ = new __WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject__["BehaviorSubject"]([]);
+        this.ongoing_patients$ = new __WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject__["BehaviorSubject"]([]);
+        this.discharged_patients$ = new __WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject__["BehaviorSubject"]([]);
+        this.patient_resource$ = new __WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject__["BehaviorSubject"]([])
             .asObservable();
-        this.treatment_resource$ = new __WEBPACK_IMPORTED_MODULE_3_rxjs_BehaviorSubject__["BehaviorSubject"]([])
+        this.treatment_resource$ = new __WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject__["BehaviorSubject"]([])
             .asObservable();
         // Resources for patients and treatments - only needs to be loaded once
         this.getResources().subscribe(function (data) {
@@ -1547,10 +1573,9 @@ var PatientService = (function () {
             _this.ongoing_patients = [];
             _this.discharged_patients = [];
             for (var p in data.patients) {
-                console.log(data.patients[p].dob);
-                // const ageDate = new Date(Date.now() - data.patients[p].dob;//.getTime());
-                // const age =  Math.abs(ageDate.getUTCFullYear() - 1970);
-                // data.patients[p].age = age;
+                var ageDate = new Date(Date.now() - new Date(data.patients[p].dob).getTime());
+                var age = Math.abs(ageDate.getUTCFullYear() - 1970);
+                data.patients[p].age = age;
                 if (data.patients[p].discharged == false) {
                     _this.ongoing_patients.push(data.patients[p]);
                 }
@@ -1570,6 +1595,13 @@ var PatientService = (function () {
         // TODO: get all patients in patient collection
     };
     PatientService.prototype.validatePatient = function () {
+        var dateReq = ['day', 'month', 'year'];
+        for (var d in dateReq) {
+            if (this.new_patient[dateReq[d]] == undefined) {
+                return false;
+            }
+        }
+        this.new_patient.dob = this.dateService.parseDate(this.new_patient.year, this.new_patient.month, this.new_patient.day);
         for (var r in this.patient_resource) {
             var key = this.patient_resource[r].key;
             if (this.new_patient[key] == undefined) {
@@ -1581,9 +1613,19 @@ var PatientService = (function () {
         }
     };
     PatientService.prototype.validateTreatment = function (treatment) {
+        var dateReq = ['day', 'month', 'year'];
+        for (var d in dateReq) {
+            if (this.new_treatment[dateReq[d]] == undefined) {
+                console.log(dateReq[d]);
+                return false;
+            }
+        }
+        this.new_treatment.treatment_date = this.dateService.parseDate(this.new_treatment.year, this.new_treatment.month, this.new_treatment.day);
+        //new Date(this.new_treatment.year,this.new_treatment.month,this.new_treatment.day);
         for (var r in this.treatment_resource) {
             var key = this.treatment_resource[r].key;
             if (treatment[key] == undefined) {
+                console.log('Missing ', key);
                 return false;
             }
             else {
@@ -1619,23 +1661,11 @@ var PatientService = (function () {
     PatientService.prototype.getSelectedPatient = function () {
         return this.selected_patient;
     };
-    // Date inputs are binded as strings, convert to Date object
-    PatientService.prototype.parseDate = function (date) {
-        var delim = "-";
-        if (date.split("-").length < 3) {
-            delim = "/";
-        }
-        var d = {
-            year: parseInt(date.split(delim)[0]),
-            month: parseInt(date.split(delim)[1]) - 1,
-            day: parseInt(date.split(delim)[2])
-        };
-        return new Date(d.year, d.month, d.day);
-    };
     PatientService.prototype.getNewPatient = function () {
-        var dob = this.parseDate(this.new_patient.dob);
+        console.log(this.new_patient);
         this.new_patient.treatments = [this.new_treatment];
         this.new_patient.discharged = false;
+        console.log('New patient result ', this.new_patient);
         return this.new_patient;
     };
     PatientService.prototype.prepEndpoint = function (ep) {
@@ -1650,10 +1680,10 @@ var PatientService = (function () {
 }());
 PatientService = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_date_service__["a" /* DateService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_date_service__["a" /* DateService */]) === "function" && _c || Object])
 ], PatientService);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=/Users/carlahyenne/Documents/osteappathy/angular-src/src/patient.service.js.map
 
 /***/ }),
