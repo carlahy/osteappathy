@@ -40,12 +40,37 @@ export class BookingCreateComponent implements OnInit {
   }
 
   createBooking() {
-    console.log('Creating event from data ', this.new_booking);
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
-    let ep = this.authService.prepEndpoint('bookings/');
-    return this.http.post(ep, this.new_booking, {headers:headers})
-      .map(res => res.json());
+
+    this.new_booking.month = this.dateService.dateFields.months.indexOf(this.new_booking.month);
+
+    var start = this.dateService.formatDateTime(
+      this.new_booking.year,
+      this.new_booking.month,
+      this.new_booking.day,
+      this.new_booking.hour,
+      this.new_booking.minutes).toISOString();
+
+    // console.log('Start is ', start);
+
+    let event = {
+      title:this.new_booking.title,
+      start:start
+    };
+
+    console.log('EVENT ', event);
+
+    // let headers = new Headers();
+    // headers.append('Content-Type','application/json');
+    // let ep = this.authService.prepEndpoint('bookings/');
+    // return this.http.post(ep, event, {headers:headers})
+    //   .map(res => res.json())
+    //   .subscribe(data => {
+    //     if(data.success) {
+    //       // this.getBookings();
+    //     } else {
+    //       console.log('Something went wrong, booking could not be created');
+    //     }
+    //   });
   }
 
 }

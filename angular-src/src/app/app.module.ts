@@ -21,6 +21,7 @@ import { PatientEditComponent } from './components/patient-edit/patient-edit.com
 import { PatientCreateComponent } from './components/patient-create/patient-create.component';
 import { DateService } from './services/date.service'
 import { ResourceService } from './services/resource.service'
+import { BookingService } from './services/booking.service'
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { ChartComponent } from './components/chart/chart.component';
@@ -76,7 +77,8 @@ const appRoutes: Routes = [
     AuthGuard,
     PatientService,
     DateService,
-    ResourceService
+    ResourceService,
+    BookingService
   ],
   bootstrap: [AppComponent]
 })

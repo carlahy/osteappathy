@@ -8,7 +8,58 @@
   </div>
 </div>
 
-<app-booking-create></app-booking-create>
+<!-- <app-booking-create></app-booking-create> -->
+
+<div class="modal fade" id="newBooking" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">New Booking</h4>
+      </div>
+      <flash-messages></flash-messages>
+      <div class="modal-body">
+        <form (submit)="createBooking()" class="form-horizontal" autocomplete="off">
+          <div class="form-group form-inline" *ngFor="let r of booking_resource">
+            <label class="control-label col-sm-4">{{r.name}}</label>
+            <input type="text" *ngIf="r.type == 1 " [(ngModel)]="new_booking[r.key]" name="{{r.key}}" class="form-control focusedInput">
+
+            <!-- Date -->
+            <div class="" *ngIf="r.type == 2">
+              <select class="form-control" [(ngModel)]="new_booking.day" name="{{r.key}}">
+                <option *ngFor="let v of dateService.dateFields.days; let i=index">{{i+1}}</option>
+              </select>
+              <select class="form-control" [(ngModel)]="new_booking.month" name="{{r.key}}">
+                <option *ngFor="let v of dateService.dateFields.months;">{{v}}</option>
+              </select>
+              <select class="form-control" [(ngModel)]="new_booking.year" name="{{r.key}}">
+                <option *ngFor="let v of dateService.dateFields.years; let i=index">{{dateService.year - i}}</option>
+              </select>
+            </div>
+
+            <!-- Time -->
+            <div class="" *ngIf="r.type == 4">
+              <select class="form-control" [(ngModel)]="new_booking.hour" name="{{r.key}}">
+                <option *ngFor="let v of dateService.timeFields.hours; let i=index">{{i}}</option>
+              </select>
+              <select class="form-control" [(ngModel)]="new_booking.minutes" name="{{r.key}}">
+                <option *ngFor="let v of dateService.timeFields.minutes;">{{v}}</option>
+              </select>
+            </div>
+
+            <input type="number" *ngIf="r.type == 3" [(ngModel)]="new_booking[r.key]" name="{{r.key}}" class="form-control"/>
+
+            <select class="form-control" *ngIf="r.type == 0" [(ngModel)]="new_booking[r.key]" name="{{r.key}}">
+              <option *ngFor="let v of r.values">{{v}}</option>
+            </select>
+          </div>
+
+          <input type="submit" class="btn btn-primary" value="Add Booking">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <div class="row">
   <div class="col-md-12">

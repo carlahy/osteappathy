@@ -10,6 +10,7 @@
 {"key": "treatment_used", "name":"Treatment/Management Used", "type":0, "order":2, "values": [ "No Treatment", "Soft Tissue", "Mobilisations/Articulations", "MET", "NMT", "Myofascial Release", "Strain Counterstrain", "Visceral", "Functional Techniques", "Hydrotherapy", "Cranio-sacral", "HVLAT/Manipulation" , "Relaxation", "Acupuncture", "Education", "Exercise", "Other" ], "for":"treatment" }
 {"key" : "vas", "name":"VAS", "type":3, "order":3, "values" : [], "for":"treatment" }
 {"key" : "qal", "name":"QAL", "type":3, "order":4, "values" : [], "for":"treatment" }
-{"key" : "title","name":"Event title", "type":1, "order":1, "for":"booking"}
-{"key" : "start","name":"Start date", "type":2, "order":2, "for":"booking"}
-{"key" : "end","name":"End date", "type":2, "order":3, "for":"booking"}
+{"key" : "title","name":"Booking", "type":0, "order":1, "values":["Treatment","Consult","Consult Extra"],"for":"booking"}
+{"key" : "start","name":"Date", "type":2, "order":2, "for":"booking"}
+{"key" : "time","name":"Time", "type":4, "order":3, "for":"booking"}
+{"key" : "duration","name":"Duration (minutes)", "type":1, "order":4, "for":"booking"}

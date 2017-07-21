@@ -25,6 +25,11 @@ export class DateService {
     years: Array(100)
   };
 
+  public timeFields = {
+    minutes: ['00','15','30','45'],
+    hours: Array(24)
+  };
+
   constructor() { }
 
   parseDate(year,month,day){
@@ -36,7 +41,13 @@ export class DateService {
     mm = mm + 1; // mm is zero-based
     return [yyyy,
       (mm>9 ? '' : '0') + mm,
-      (dd>9 ? '' : '0') + dd].join('');
+      (dd>9 ? '' : '0') + dd].join('-');
+  }
+
+  formatDateTime(yyyy,mm,dd,hh,m) {
+    var date = this.formatDate(yyyy,mm,dd);
+    date = date + "T" + [hh,":",m].join('') + "Z";
+    return new Date(date);
   }
 
 }
