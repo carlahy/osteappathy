@@ -412,10 +412,11 @@ var BookingDashboardComponent = (function () {
     BookingDashboardComponent.prototype.ngAfterViewInit = function () {
     };
     BookingDashboardComponent.prototype.getBookings = function () {
+        var url = this.authService.prepEndpoint('bookings/');
         return __WEBPACK_IMPORTED_MODULE_6_jquery__(this.myCalendar.nativeElement).fullCalendar({
             events: function (start, end, timezone, addEventSource) {
                 __WEBPACK_IMPORTED_MODULE_6_jquery__["ajax"]({
-                    url: "http://localhost:8080/bookings/",
+                    url: url,
                     dataType: 'json',
                     // data: {
                     //   // our hypothetical feed requires UNIX timestamps

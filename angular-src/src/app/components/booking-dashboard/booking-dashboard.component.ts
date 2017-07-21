@@ -71,10 +71,11 @@ export class BookingDashboardComponent implements OnInit, AfterViewInit {
   }
 
   getBookings(){
+    var url = this.authService.prepEndpoint('bookings/');
     return $(this.myCalendar.nativeElement).fullCalendar({
       events: function(start, end, timezone, addEventSource) {
         $.ajax({
-            url: "http://localhost:8080/bookings/",
+            url: url,
             dataType: 'json',
             // data: {
             //   // our hypothetical feed requires UNIX timestamps
