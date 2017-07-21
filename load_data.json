@@ -1,12 +1,15 @@
-{"key": "patient_num", "name":"Patient Number", "type":1, "order":1, "values":[], "for":"Patient"}
-{"key": "sex", "name":"Sex","type":0, "order":2, "values":["Male","Female","Other"], "for":"Patient"}
-{"key":"dob", "name":"DOB","type":2, "order":3, "values":[], "for":"Patient"}
-{"key" : "ethnicity", "name":"Ethnicity", "type":0, "order":4, "values" : [ "White", "Mixed", "Asian (Indian Subcontinent)", "Black", "Chinese", "Other", "Rather not say" ], "for":"Patient" }
-{"key" : "occupation", "name":"Occupation", "type":0, "order":5, "values": [ "Full Time Employed", "Full Time Self Employed", "Part Time Employed", "Part Time Self Employed", "Not Currently Employed", "Retired", "Student", "No Response" ], "for":"Patient" }
-{"key" : "site_of_complaint", "name":"Anatomical Site of Complaint", "type":0, "order":6, "values": [ "Cervical Spine", "Thoracic Spine", "Lumbar Spine", "Sacro-iliac Joint", "Upper Extremity", "Lower Extremity" ], "for":"Patient" }
-{"key": "stage", "name":"Stage", "type":0, "order":7, "values": [ "Acute", "Chronic" ], "for":"Patient" }
-{"key": "suitable_for_osteopathy", "name":"Patient Suitable for Osteopathy", "type":0, "order":8, "values": [ "Yes", "No" ], "for":"Patient" }
-{"key":"treatment_date", "name":"Treatment Date","type":2, "order":1, "values":[], "for":"Treatment"}
-{"key": "treatment_used", "name":"Treatment/Management Used", "type":0, "order":2, "values": [ "No Treatment", "Soft Tissue", "Mobilisations/Articulations", "MET", "NMT", "Myofascial Release", "Strain Counterstrain", "Visceral", "Functional Techniques", "Hydrotherapy", "Cranio-sacral", "HVLAT/Manipulation", "Relaxation", "Acupuncture", "Education", "Exercise", "Other" ], "for":"Treatment" }
-{"key" : "vas", "name":"VAS", "type":3, "order":3, "values" : [], "for":"Treatment" }
-{"key" : "qal", "name":"QAL", "type":3, "order":4, "values" : [], "for":"Treatment" }
+{"key": "patient_num", "name":"Patient Number", "type":1, "order":1, "values":[], "for":"patient"}
+{"key": "sex", "name":"Sex","type":0, "order":2, "values":["Male","Female","Other"], "for":"patient"}
+{"key":"dob", "name":"DOB","type":2, "order":3, "values":[], "for":"patient"}
+{"key" : "ethnicity", "name":"Ethnicity", "type":0, "order":4, "values" : [ "White", "Mixed", "Asian (Indian Subcontinent)", "Black", "Chinese", "Other", "Rather not say" ], "for":"patient" }
+{"key" : "occupation", "name":"Occupation", "type":0, "order":5, "values": [ "Full Time Employed", "Full Time Self Employed", "Part Time Employed", "Part Time Self Employed", "Not Currently Employed", "Retired", "Student", "No Response" ], "for":"patient" }
+{"key" : "site_of_complaint", "name":"Anatomical Site of Complaint", "type":0, "order":6, "values": [ "Cervical Spine", "Thoracic Spine", "Lumbar Spine", "Sacro-iliac Joint", "Upper Extremity", "Lower Extremity" ], "for":"patient" }
+{"key": "stage", "name":"Stage", "type":0, "order":7, "values": [ "Acute", "Chronic" ], "for":"patient" }
+{"key": "suitable_for_osteopathy", "name":"Patient Suitable for Osteopathy", "type":0, "order":8, "values": [ "Yes", "No" ], "for":"patient" }
+{"key":"treatment_date", "name":"Treatment Date","type":2, "order":1, "values":[], "for":"treatment"}
+{"key": "treatment_used", "name":"Treatment/Management Used", "type":0, "order":2, "values": [ "No Treatment", "Soft Tissue", "Mobilisations/Articulations", "MET", "NMT", "Myofascial Release", "Strain Counterstrain", "Visceral", "Functional Techniques", "Hydrotherapy", "Cranio-sacral", "HVLAT/Manipulation" , "Relaxation", "Acupuncture", "Education", "Exercise", "Other" ], "for":"treatment" }
+{"key" : "vas", "name":"VAS", "type":3, "order":3, "values" : [], "for":"treatment" }
+{"key" : "qal", "name":"QAL", "type":3, "order":4, "values" : [], "for":"treatment" }
+{"key" : "title","name":"Event title", "type":1, "order":1, "for":"booking"}
+{"key" : "start","name":"Start date", "type":2, "order":2, "for":"booking"}
+{"key" : "end","name":"End date", "type":2, "order":3, "for":"booking"}

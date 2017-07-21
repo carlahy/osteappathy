@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { PatientService } from '../../services/patient.service';
+import { ValidateService } from '../../services/validate.service';
 
 @Component({
   selector: 'app-patient-edit',
@@ -14,9 +15,11 @@ export class PatientEditComponent implements OnInit {
 
   constructor(
     private flashMessage:FlashMessagesService,
-    private patientService:PatientService
+    private patientService:PatientService,
+    private validateService:ValidateService
   ) {
     this.patientService = patientService;
+    this.validateService = validateService;
   }
 
   ngOnInit() {
@@ -53,7 +56,7 @@ export class PatientEditComponent implements OnInit {
   }
 
   addTreatment() {
-    if(!this.patientService.validateTreatment(this.new_treatment)){
+    if(!this.validateService.validateTreatment(this.new_treatment)){
       this.flashMessage.show('Please fill in required treatment fields', {cssClass: 'alert-danger', timeout:3000});
       return false;
     }

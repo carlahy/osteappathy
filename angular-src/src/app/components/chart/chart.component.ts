@@ -90,7 +90,6 @@ export class ChartComponent implements OnInit {
     this.patients$ = this.patientService.subscribeToDataService(1);
     this.patients$.subscribe(patients => {
       this.patients = patients;
-
     });
 
     this.discharged_patients$ = this.patientService.subscribeToDataService(3);

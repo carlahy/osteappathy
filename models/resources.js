@@ -31,3 +31,8 @@ const Resources = module.exports = mongoose.model('Resources', ResourcesSchema);
 module.exports.getResources = function(callback){
   Resources.find(callback);
 };
+
+module.exports.getResourcesFor = function(_for, callback){
+  const query = {for:_for};
+  Resources.find(query, callback);
+}

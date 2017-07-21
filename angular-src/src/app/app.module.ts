@@ -20,6 +20,7 @@ import { PatientService } from './services/patient.service';
 import { PatientEditComponent } from './components/patient-edit/patient-edit.component';
 import { PatientCreateComponent } from './components/patient-create/patient-create.component';
 import { DateService } from './services/date.service'
+import { ResourceService } from './services/resource.service'
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { ChartComponent } from './components/chart/chart.component';
@@ -30,6 +31,7 @@ import { PatientDashboardComponent } from './components/patient-dashboard/patien
 import { BookingDashboardComponent } from './components/booking-dashboard/booking-dashboard.component';
 
 import { CalendarComponent } from "angular2-fullcalendar/src/calendar/calendar";
+import { BookingCreateComponent } from './components/booking-create/booking-create.component';
 
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
@@ -56,7 +58,8 @@ const appRoutes: Routes = [
     DatepickerComponent,
     PatientDashboardComponent,
     BookingDashboardComponent,
-    CalendarComponent
+    CalendarComponent,
+    BookingCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +75,8 @@ const appRoutes: Routes = [
     AuthService,
     AuthGuard,
     PatientService,
-    DateService
+    DateService,
+    ResourceService
   ],
   bootstrap: [AppComponent]
 })

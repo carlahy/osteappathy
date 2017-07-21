@@ -5,6 +5,15 @@ const Booking = require('../models/booking');
 
 // Create booking
 
+router.post('/create', (req,res,next) => {
+  Booking.getAllBookings((err, bookings) => {
+    if (err) throw err;
+    if (!bookings) {
+      return res.json({success:false,msg:'Bookings not found'});
+    }
+    return res.json({success:true,events:bookings});
+  });
+});
 
 // Read all bookings
 

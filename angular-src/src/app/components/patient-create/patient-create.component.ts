@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { PatientService } from '../../services/patient.service';
+import { ValidateService } from '../../services/validate.service';
 import { DateService } from '../../services/date.service';
 
 @Component({
@@ -12,9 +13,11 @@ export class PatientCreateComponent implements OnInit {
 
   constructor(
     private flashMessage:FlashMessagesService,
+    private validateService:ValidateService,
     private patientService: PatientService,
     private dateService: DateService
   ) {
+    this.validateService = validateService;
     this.patientService = patientService;
     this.dateService = dateService;
   }
@@ -25,12 +28,12 @@ export class PatientCreateComponent implements OnInit {
 
   createPatient() {
 
-    if(!this.patientService.validatePatient()) {
+    if(!this.validateService.validatePatient()) {
       this.flashMessage.show('Please fill in required patient fields', {cssClass: 'alert-danger', timeout:3000});
       return false;
     }
 
-    if(!this.patientService.validateTreatment(this.patientService.new_treatment)){
+    if(!this.validateService.validateTreatment(this.patientService.new_treatment)){
       this.flashMessage.show('Please fill in required treatment fields', {cssClass: 'alert-danger', timeout:3000});
       return false;
     }

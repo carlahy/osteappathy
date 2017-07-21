@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { URLSearchParams, Http, Headers } from '@angular/http';
 import { AuthService } from '../services/auth.service';
 import { DateService } from '../services/date.service';
+import { ResourceService } from '../services/resource.service';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
@@ -27,23 +28,20 @@ export class PatientService {
   treatment_resource$: BehaviorSubject<any[]>;
 
   new_patient:any;
-
   new_treatment:any;
   selected_patient:any;
 
   user_id:String;
 
-  isDev:boolean;
-
   constructor(
     private http:Http,
     private authService:AuthService,
-    private dateService:DateService
+    private dateService:DateService,
+    private resourceService:ResourceService
   ) {
+      this.resourceService = resourceService;
       this.dateService = dateService;
       this.user_id = this.authService.getUserId();
-
-      this.isDev = this.authService.isDev;
 
       this.new_patient = {};
       this.new_treatment = {};
@@ -55,19 +53,20 @@ export class PatientService {
       this.patient_resource$ = <BehaviorSubject<any[]>> new BehaviorSubject([])
         .asObservable();
       this.treatment_resource$ = <BehaviorSubject<any[]>> new BehaviorSubject([])
-          .asObservable();
+        .asObservable();
 
       // Resources for patients and treatments - only needs to be loaded once
-      this.getResources().subscribe(data => {
+      this.resourceService.getResources().subscribe(data => {
         if(data.success) {
+
           this.patient_resource = [];
           this.treatment_resource = [];
 
           for (var r in data.resources) {
-            if (data.resources[r].for == "Patient") {
+            if (data.resources[r].for == "patient") {
               this.patient_resource.push(data.resources[r]);
               this.new_patient[data.resources[r].key] = undefined;
-            } else {
+            } else if(data.resources[r].for == "treatment"){
               this.treatment_resource.push(data.resources[r]);
               this.new_treatment[data.resources[r].key] = undefined;
             }
@@ -90,14 +89,6 @@ export class PatientService {
     return;
   }
 
-  getResources() {
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
-    let ep = this.prepEndpoint('resources/');
-    return this.http.get(ep, {headers:headers})
-      .map(res => res.json());
-  }
-
   loadPatients(){
     this.getPatientList().subscribe(data => {
       this.patient_list = data.patient_list;
@@ -112,7 +103,7 @@ export class PatientService {
   getPatientList(){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    let ep = this.prepEndpoint('users/patients');
+    let ep = this.authService.prepEndpoint('users/patients');
     let params = new URLSearchParams();
     params.set('user_id', this.authService.getUserId());
 
@@ -126,7 +117,7 @@ export class PatientService {
   getPatients(){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    let ep = this.prepEndpoint('patients/user');
+    let ep = this.authService.prepEndpoint('patients/user');
     let params = new URLSearchParams();
     params.set('patient_list', this.patient_list);
 
@@ -166,51 +157,10 @@ export class PatientService {
     // TODO: get all patients in patient collection
   }
 
-  validatePatient(){
-    let dateReq = ['day','month','year']
-    for(var d in dateReq) {
-      if(this.new_patient[dateReq[d]] == undefined) {
-        return false;
-      }
-    }
-    this.new_patient.dob = this.dateService.parseDate(this.new_patient.year,this.new_patient.month,this.new_patient.day);
-
-    for(var r in this.patient_resource) {
-      var key = this.patient_resource[r].key;
-      if(this.new_patient[key] == undefined) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-  }
-
-  validateTreatment(treatment){
-    let dateReq = ['day','month','year']
-    for(var d in dateReq) {
-      if(this.new_treatment[dateReq[d]] == undefined) {
-        console.log(dateReq[d]);
-        return false;
-      }
-    }
-    this.new_treatment.treatment_date = this.dateService.parseDate(this.new_treatment.year,this.new_treatment.month,this.new_treatment.day);
-    //new Date(this.new_treatment.year,this.new_treatment.month,this.new_treatment.day);
-
-    for(var r in this.treatment_resource) {
-      var key = this.treatment_resource[r].key;
-      if(treatment[key] == undefined) {
-        console.log('Missing ', key);
-        return false;
-      } else {
-        return true;
-      }
-    }
-  }
-
   createPatient(patient){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    let ep = this.prepEndpoint('patients/create');
+    let ep = this.authService.prepEndpoint('patients/create');
     return this.http.post(ep, patient, {headers:headers})
       .map(res => res.json());
   }
@@ -218,7 +168,7 @@ export class PatientService {
   updatePatient(patient){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    let ep = this.prepEndpoint('patients/update');
+    let ep = this.authService.prepEndpoint('patients/update');
     return this.http.post(ep, {patient:patient}, {headers:headers})
       .map(res => res.json());
   }
@@ -226,7 +176,7 @@ export class PatientService {
   addPatientToUser(patient_id){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    let ep = this.prepEndpoint('users/newpatient');
+    let ep = this.authService.prepEndpoint('users/newpatient');
     let user_id = this.authService.getUserId();
     return this.http.post(ep, {user_id:user_id,patient_id:patient_id}, {headers:headers})
       .map(res => res.json());
@@ -241,20 +191,10 @@ export class PatientService {
   }
 
   getNewPatient() {
-    console.log(this.new_patient);
-
     this.new_patient.treatments = [this.new_treatment];
     this.new_patient.discharged = false;
-    console.log('New patient result ', this.new_patient);
+    console.log('New patient ', this.new_patient);
     return this.new_patient;
-  }
-
-  prepEndpoint(ep){
-    if(this.isDev) {
-      return ep;
-    } else {
-      return 'http://localhost:8080/'+ep;
-    }
   }
 
 }

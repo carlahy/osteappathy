@@ -2,7 +2,13 @@
   Your bookings
 </h1>
 
-<button class="btn btn-default" type="button" name="button">New Booking</button>
+<div class="row top-buffer">
+  <div class="col-md-6">
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#newBooking">New Booking</button>
+  </div>
+</div>
+
+<app-booking-create></app-booking-create>
 
 <div class="row">
   <div class="col-md-12">
