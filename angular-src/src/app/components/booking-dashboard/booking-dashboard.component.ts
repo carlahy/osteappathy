@@ -35,21 +35,31 @@ export class BookingDashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.getBookings().subscribe(data => {
-      if(data.success) {
-        this.calendarOptions.events = data.events;
-        $(this.myCalendar.nativeElement).fullCalendar('addEventSource', data.events);
-        console.log('Current month ', this.getCurrentMonth());
-      } else {
-        console.log('Something went wrong, bookings could not be loaded');
+    $(this.myCalendar.nativeElement).fullCalendar({
+      events: function(start, end, timezone, updateBookings) {
+        $.ajax({
+            url: "http://localhost:8080/bookings/all",
+            dataType: 'json',
+            // data: {
+            //   // our hypothetical feed requires UNIX timestamps
+            //   start: start.unix(),
+            //   end: end.unix()
+            // },
+            success: function(res) {
+              updateBookings(res.events);
+            }
+        });
       }
     });
   }
 
   ngAfterViewInit() {
 
+  }
 
-
+  updateBookings(events) {
+    this.calendarOptions.events = events;
+    $(this.myCalendar.nativeElement).fullCalendar('addEventSource', events);
   }
 
   // ! month is 0 based
@@ -57,22 +67,6 @@ export class BookingDashboardComponent implements OnInit, AfterViewInit {
     const currentdate = <any>$("#myCalendar").fullCalendar('getDate');
     // console.log("The current date of the calendar is ", currentdate.toString());
     return currentdate.month();
-  }
-
-  getBookings(){
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
-    let ep = this.prepEndpoint('bookings/all');
-    return this.http.get(ep, {headers:headers})
-      .map(res => res.json());
-  }
-
-  prepEndpoint(ep){
-    if(this.isDev) {
-      return ep;
-    } else {
-      return 'http://localhost:8080/'+ep;
-    }
   }
 
 }
