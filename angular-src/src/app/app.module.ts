@@ -26,13 +26,19 @@ import { ChartComponent } from './components/chart/chart.component';
 
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { DatepickerModule } from 'ngx-bootstrap/datepicker';
+import { PatientDashboardComponent } from './components/patient-dashboard/patient-dashboard.component';
+import { BookingDashboardComponent } from './components/booking-dashboard/booking-dashboard.component';
+
+import { CalendarComponent } from "angular2-fullcalendar/src/calendar/calendar";
 
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
   {path:'register', component: RegisterComponent},
   {path:'login', component: LoginComponent},
   {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
-  {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]}
+  {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]},
+  {path:'patient-dashboard', component: PatientDashboardComponent, canActivate:[AuthGuard]},
+  {path:'booking-dashboard', component: BookingDashboardComponent, canActivate:[AuthGuard]}
 ]
 
 @NgModule({
@@ -47,7 +53,10 @@ const appRoutes: Routes = [
     PatientEditComponent,
     PatientCreateComponent,
     ChartComponent,
-    DatepickerComponent
+    DatepickerComponent,
+    PatientDashboardComponent,
+    BookingDashboardComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,

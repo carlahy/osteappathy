@@ -32,4 +32,11 @@ export class DateService {
     return new Date(year,this.dateFields.months.indexOf(month),day);
   }
 
+  formatDate(yyyy,mm,dd) {
+    mm = mm + 1; // mm is zero-based
+    return [yyyy,
+      (mm>9 ? '' : '0') + mm,
+      (dd>9 ? '' : '0') + dd].join('');
+  }
+
 }

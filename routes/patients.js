@@ -60,7 +60,8 @@ router.get('/id', (req,res,next) => {
   })
 });
 
-// Get all patients in patient db
+// Read all patients in patient db
+
 router.get('/all', (req,res,next) => {
   // Patient.getPatientByNumber()
 });

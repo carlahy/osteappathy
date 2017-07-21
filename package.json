@@ -11,6 +11,7 @@
     "start": "node app"
   },
   "dependencies": {
+    "angular2-fullcalendar": "^1.0.19",
     "bcryptjs": "*",
     "body-parser": "*",
     "cors": "*",

@@ -47,8 +47,6 @@ const PatientSchema = mongoose.Schema({
   }
 });
 
-// TODO: separate dob into year, and treatment date into month and year
-
 const Patient = module.exports = mongoose.model('Patient', PatientSchema);
 
 module.exports.getPatientById = function(id, callback){

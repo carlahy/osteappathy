@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { PatientService } from '../../services/patient.service';
 import { DateService } from '../../services/date.service';
-import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-patient-create',
@@ -14,11 +13,9 @@ export class PatientCreateComponent implements OnInit {
   constructor(
     private flashMessage:FlashMessagesService,
     private patientService: PatientService,
-    private dashboardComponent:DashboardComponent,
     private dateService: DateService
   ) {
     this.patientService = patientService;
-    this.dashboardComponent = dashboardComponent;
     this.dateService = dateService;
   }
 

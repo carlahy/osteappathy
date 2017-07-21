@@ -2,3 +2,5 @@
 .top-buffer { margin-top:2em; }
 
 .bottom-buffer { margin-bottom:4em};
+
+@import "../node_modules/fullcalendar/dist/fullcalendar.min.css";
