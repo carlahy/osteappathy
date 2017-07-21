@@ -10,11 +10,8 @@ const BookingSchema = mongoose.Schema({
   start: {
     type: String,
     required: true
-  },
-  end: {
-    type:String,
-    required:false
   }
+
   // TODO:
   // osteopath: {
   //   type: String, //String name, or user (db) id?

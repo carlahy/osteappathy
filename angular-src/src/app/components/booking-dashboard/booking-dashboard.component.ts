@@ -24,6 +24,7 @@ export class BookingDashboardComponent implements OnInit, AfterViewInit {
   new_booking:any;
 
   calendarOptions:{[key: string]: any} = {
+    header: {center:'month,agendaWeek'},
     fixedWeekCount : false,
     defaultDate: new Date(),
     editable: true,
@@ -84,6 +85,14 @@ export class BookingDashboardComponent implements OnInit, AfterViewInit {
               addEventSource(res.events);
             }
         });
+      },
+      eventClick: function(eventcal, jsEvent, view) {
+        console.log('Event ', eventcal);
+        console.log('Event ' + jsEvent.pageX + ',' + jsEvent.pageY);
+        console.log('Event ', view.name);
+
+
+
       }
     });
   }
@@ -96,7 +105,6 @@ export class BookingDashboardComponent implements OnInit, AfterViewInit {
   // ! month is 0 based
   getCurrentMonth() {
     const currentdate = <any>$("#myCalendar").fullCalendar('getDate');
-    // console.log("The current date of the calendar is ", currentdate.toString());
     return currentdate.month();
   }
 
@@ -111,14 +119,10 @@ export class BookingDashboardComponent implements OnInit, AfterViewInit {
       this.new_booking.hour,
       this.new_booking.minutes);
 
-    // console.log('Start is ', start);
-
     let booking = {
       title:this.new_booking.title,
       start:start
     };
-
-    console.log('EVENT ', event);
 
     let headers = new Headers();
     headers.append('Content-Type','application/json');

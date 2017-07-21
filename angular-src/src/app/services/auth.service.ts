@@ -7,7 +7,7 @@ import { tokenNotExpired } from 'angular2-jwt';
 export class AuthService {
   authToken: any;
   user: any;
-  isDev: boolean = false;
+  isDev: boolean = true;
 
   constructor(
     private http:Http
