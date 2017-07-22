@@ -46,7 +46,8 @@ export class DateService {
 
   formatDateTime(yyyy,mm,dd,hh,m) {
     var date = this.formatDate(yyyy,mm,dd);
-    date = date + "T" + [hh,":",m].join('') + "Z";
+    date = date + "T" + [(hh>9 ? '' : '0') + hh,":",m].join('') + "Z";
+    console.log('Date is ', date);
     return new Date(date);
   }
 

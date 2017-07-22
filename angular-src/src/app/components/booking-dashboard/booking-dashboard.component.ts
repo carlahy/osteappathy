@@ -1,9 +1,7 @@
-import { Component, ElementRef, ViewChild, OnInit, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { URLSearchParams, Http, Headers } from '@angular/http';
 import { AuthService } from '../../services/auth.service';
-import { FlashMessagesService } from 'angular2-flash-messages';
-import { DateService } from '../../services/date.service';
-import { ResourceService } from '../../services/resource.service';
+import { BookingService } from '../../services/booking.service';
 import { CalendarComponent } from "angular2-fullcalendar/src/calendar/calendar";
 import { Options } from 'fullcalendar'
 import * as $ from 'jquery';
@@ -14,14 +12,9 @@ import * as moment from 'moment';
   templateUrl: './booking-dashboard.component.html',
   styleUrls: ['./booking-dashboard.component.css']
 })
-export class BookingDashboardComponent implements OnInit, AfterViewInit {
+export class BookingDashboardComponent implements OnInit {
 
   @ViewChild('myCalendar', { read: ElementRef }) myCalendar: ElementRef;
-
-  isDev:boolean;
-
-  booking_resource:any[];
-  new_booking:any;
 
   calendarOptions:{[key: string]: any} = {
     header: {center:'month,agendaWeek'},
@@ -34,40 +27,20 @@ export class BookingDashboardComponent implements OnInit, AfterViewInit {
   constructor(
     private http:Http,
     private authService:AuthService,
-    private dateService:DateService,
-    private resourceService:ResourceService,
-    private flashMessage:FlashMessagesService
+    private bookingService:BookingService
   ) {
     this.http = http;
     this.authService = authService;
-    this.dateService = dateService;
-    this.resourceService = resourceService;
-    this.flashMessage = flashMessage;
-
-    // Get resources
-    this.dateService = dateService;
-    this.resourceService = resourceService;
-    this.authService = authService;
-    this.http = http;
-
-    this.new_booking = {};
-
-    this.resourceService.getResourcesFor('booking').subscribe(data => {
-      if(data.success) {
-        this.booking_resource = data.resources;
-      } else {
-        console.log('Something went wrong, booking resources could not be loaded');
-      }
-    });
-
+    this.bookingService = bookingService;
   }
 
   ngOnInit() {
     this.getBookings();
-  }
 
-  ngAfterViewInit() {
-
+    // Observe new event
+    this.bookingService.onNewEvent$.subscribe(data => {
+      this.refetchEvents();
+    });
   }
 
   getBookings(){
@@ -75,25 +48,21 @@ export class BookingDashboardComponent implements OnInit, AfterViewInit {
     return $(this.myCalendar.nativeElement).fullCalendar({
       events: function(start, end, timezone, addEventSource) {
         $.ajax({
-            url: url,
-            dataType: 'json',
-            // data: {
-            //   // our hypothetical feed requires UNIX timestamps
-            //   start: start.unix(),
-            //   end: end.unix()
-            // },
-            success: function(res) {
-              addEventSource(res.events);
-            }
+          url: url,
+          dataType: 'json',
+          // data: {
+          //   // our hypothetical feed requires UNIX timestamps
+          //   start: start.unix(),
+          //   end: end.unix()
+          // },
+          success: function(res) {
+            addEventSource(res.events);
+          }
         });
       },
       eventClick: function(eventcal, jsEvent, view) {
         console.log('Event ', eventcal);
-        console.log('Event ' + jsEvent.pageX + ',' + jsEvent.pageY);
-        console.log('Event ', view.name);
-
-
-
+        // $('#eventModal').toggle();
       }
     });
   }
@@ -103,41 +72,14 @@ export class BookingDashboardComponent implements OnInit, AfterViewInit {
     $(this.myCalendar.nativeElement).fullCalendar('addEventSource', events);
   }
 
+  refetchEvents(){
+    $(this.myCalendar.nativeElement).fullCalendar('refetchEvents');
+  }
+
   // ! month is 0 based
   getCurrentMonth() {
     const currentdate = <any>$("#myCalendar").fullCalendar('getDate');
     return currentdate.month();
-  }
-
-  createBooking() {
-
-    this.new_booking.month = this.dateService.dateFields.months.indexOf(this.new_booking.month);
-
-    var start = this.dateService.formatDateTime(
-      this.new_booking.year,
-      this.new_booking.month,
-      this.new_booking.day,
-      this.new_booking.hour,
-      this.new_booking.minutes);
-
-    let booking = {
-      title:this.new_booking.title,
-      start:start
-    };
-
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
-    let ep = this.authService.prepEndpoint('bookings/');
-    return this.http.post(ep, booking, {headers:headers})
-      .map(res => res.json())
-      .subscribe(data => {
-        if(data.success) {
-          this.flashMessage.show(data.msg, {cssClass: 'alert-success', timeout:3000});
-          $(this.myCalendar.nativeElement).fullCalendar('refetchEvents');
-        } else {
-          this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout:3000});
-        }
-      });
   }
 
 }
