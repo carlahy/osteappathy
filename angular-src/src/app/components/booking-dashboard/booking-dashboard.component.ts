@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit, TemplateRef } from '@angular/core';
 import { URLSearchParams, Http, Headers } from '@angular/http';
 import { AuthService } from '../../services/auth.service';
 import { BookingService } from '../../services/booking.service';
@@ -6,6 +6,7 @@ import { CalendarComponent } from "angular2-fullcalendar/src/calendar/calendar";
 import { Options } from 'fullcalendar'
 import * as $ from 'jquery';
 import * as moment from 'moment';
+import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
   selector: 'app-booking-dashboard',
@@ -15,6 +16,7 @@ import * as moment from 'moment';
 export class BookingDashboardComponent implements OnInit {
 
   @ViewChild('myCalendar', { read: ElementRef }) myCalendar: ElementRef;
+  @ViewChild('eventModal') eventModal: ModalDirective;
 
   calendarOptions:{[key: string]: any} = {
     header: {center:'month,agendaWeek'},
@@ -23,6 +25,7 @@ export class BookingDashboardComponent implements OnInit {
     editable: true,
     eventLimit: true // allow "more" link when too many events
   };
+
 
   constructor(
     private http:Http,
@@ -62,9 +65,13 @@ export class BookingDashboardComponent implements OnInit {
       },
       eventClick: function(eventcal, jsEvent, view) {
         console.log('Event ', eventcal);
-        // $('#eventModal').toggle();
+        this.openModal()
       }
     });
+  }
+
+  public openModal() {
+    this.eventModal.show();
   }
 
   addEventSource(events) {
